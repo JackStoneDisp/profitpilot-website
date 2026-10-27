@@ -494,7 +494,7 @@
 					const miles = parseFloat(document.getElementById('quick-miles').value) || 0;
 					const gross = parseFloat(document.getElementById('quick-gross').value) || 0;
 					if (miles > 0 && gross > 0) {
-						const exp = (miles * 1.25) + (gross * 0.07);
+						const exp = (miles * 1.32) + (gross * 0.07);
 						const net = gross - exp;
 						document.getElementById('quick-net').innerText = '$' + net.toFixed(2);
 					} else {
