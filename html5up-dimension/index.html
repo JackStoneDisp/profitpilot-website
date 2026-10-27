@@ -119,7 +119,7 @@
 						<!-- Fuel & Hubs -->
 							<article id="fuel">
 								<h2 class="major">US Freight Hubs & Diesel Rates</h2>
-								<p>Track regional diesel benchmarks and estimated fuel costs per mile across major US dispatch corridors.</p>
+								<p>Track regional diesel benchmarks and check real-world trip profitability before booking a load.</p>
 								
 								<div class="fields">
 									<div class="field">
@@ -158,9 +158,9 @@
 
 								<hr />
 								<h3>Trip Fuel Cost Calculator</h3>
-								<p>Estimate total fuel expense and net cost per mile before accepting a load offer.</p>
+								<p>Estimate total fuel expense and fuel cost per mile.</p>
 
-								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
+								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px; margin-bottom: 25px;">
 									<div class="fields">
 										<div class="field half">
 											<label for="trip-miles">Total Trip Miles</label>
@@ -179,6 +179,38 @@
 									<div style="margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; text-align: center;">
 										<p style="margin-bottom: 5px;">Estimated Total Fuel Cost: <strong id="total-fuel-cost" style="color: #4CAF50; font-size: 1.2em;">$0.00</strong></p>
 										<p style="margin-bottom: 0;">Fuel Cost Per Mile (FCPM): <strong id="fcpm-result" style="color: #2196F3; font-size: 1.1em;">$0.00 / mi</strong></p>
+									</div>
+								</div>
+
+								<!-- NEW REAL-WORLD NET PROFITABILITY CALCULATOR -->
+								<hr />
+								<h3>Real-World Net Profit Calculator</h3>
+								<p>Calculate your true net earnings after fuel, dispatch fees (5%), factoring (2%), maintenance reserves ($0.15/mi), and tolls.</p>
+
+								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
+									<div class="fields">
+										<div class="field half">
+											<label for="net-gross-pay">Gross Load Pay ($)</label>
+											<input type="number" id="net-gross-pay" placeholder="e.g., 2500" oninput="calculateNetProfit()" />
+										</div>
+										<div class="field half">
+											<label for="net-miles">Total Trip Miles</label>
+											<input type="number" id="net-miles" placeholder="e.g., 850" oninput="calculateNetProfit()" />
+										</div>
+										<div class="field half">
+											<label for="net-diesel">Diesel Price ($/gal)</label>
+											<input type="number" step="0.01" id="net-diesel" placeholder="e.g., 3.85" oninput="calculateNetProfit()" />
+										</div>
+										<div class="field half">
+											<label for="net-tolls">Tolls / Scales / Misc ($)</label>
+											<input type="number" id="net-tolls" placeholder="e.g., 50" value="35" oninput="calculateNetProfit()" />
+										</div>
+									</div>
+
+									<div style="margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.3); border-radius: 6px; text-align: center;">
+										<p style="margin-bottom: 5px;">Total Estimated Expenses: <strong id="net-total-expenses" style="color: #FF5722;">$0.00</strong></p>
+										<p style="margin-bottom: 5px;">Estimated Net Profit: <strong id="net-profit-dollars" style="color: #4CAF50; font-size: 1.3em;">$0.00</strong></p>
+										<p style="margin-bottom: 0;">Net Profit Per Mile: <strong id="net-profit-per-mile" style="color: #2196F3; font-size: 1.1em;">$0.00 / mi</strong></p>
 									</div>
 								</div>
 							</article>
@@ -292,10 +324,15 @@
 				function calcHome() {
 					const miles = parseFloat(document.getElementById('home-miles').value) || 0;
 					const price = parseFloat(document.getElementById('home-price').value) || 0;
-					const cost = (miles / 6.5) * price;
-					const fcpm = price / 6.5;
-					document.getElementById('home-total').innerText = '$' + cost.toFixed(2);
-					document.getElementById('home-fcpm').innerText = '$' + fcpm.toFixed(2);
+					if (miles > 0 && price > 0) {
+						const cost = (miles / 6.5) * price;
+						const fcpm = price / 6.5;
+						document.getElementById('home-total').innerText = '$' + cost.toFixed(2);
+						document.getElementById('home-fcpm').innerText = '$' + fcpm.toFixed(2);
+					} else {
+						document.getElementById('home-total').innerText = '$0.00';
+						document.getElementById('home-fcpm').innerText = '$0.00';
+					}
 				}
 
 				function calculateFuel() {
@@ -310,6 +347,33 @@
 					} else {
 						document.getElementById('total-fuel-cost').innerText = '$0.00';
 						document.getElementById('fcpm-result').innerText = '$0.00 / mi';
+					}
+				}
+
+				function calculateNetProfit() {
+					const gross = parseFloat(document.getElementById('net-gross-pay').value) || 0;
+					const miles = parseFloat(document.getElementById('net-miles').value) || 0;
+					const dieselPrice = parseFloat(document.getElementById('net-diesel').value) || 0;
+					const tolls = parseFloat(document.getElementById('net-tolls').value) || 0;
+
+					if (gross > 0 && miles > 0 && dieselPrice > 0) {
+						// Calculations
+						const fuelCost = (miles / 6.5) * dieselPrice;
+						const dispatchFee = gross * 0.05; // 5% ProfitPilot Fee
+						const factoringFee = gross * 0.02; // 2% Factoring Fee
+						const maintReserve = miles * 0.15; // $0.15/mi maintenance & tires
+						
+						const totalExpenses = fuelCost + dispatchFee + factoringFee + maintReserve + tolls;
+						const netProfit = gross - totalExpenses;
+						const netPerMile = netProfit / miles;
+
+						document.getElementById('net-total-expenses').innerText = '$' + totalExpenses.toFixed(2);
+						document.getElementById('net-profit-dollars').innerText = '$' + netProfit.toFixed(2);
+						document.getElementById('net-profit-per-mile').innerText = '$' + netPerMile.toFixed(2) + ' / mi';
+					} else {
+						document.getElementById('net-total-expenses').innerText = '$0.00';
+						document.getElementById('net-profit-dollars').innerText = '$0.00';
+						document.getElementById('net-profit-per-mile').innerText = '$0.00 / mi';
 					}
 				}
 			</script>
