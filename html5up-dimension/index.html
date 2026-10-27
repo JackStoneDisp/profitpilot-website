@@ -59,44 +59,31 @@
 								<!-- COMPACT HOME PAGE QUICK RATE CHECKER -->
 								<div style="background: rgba(0, 0, 0, 0.75); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.25); margin-top: 15px; text-align: left;">
 									<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-										<span style="font-size: 0.85em; font-weight: bold; color: #fff;">⚡ Quick Estimator:</span>
+										<span style="font-size: 0.85em; font-weight: bold; color: #fff;">⚡ Quick Profitability Estimator:</span>
 										<input type="number" id="quick-miles" placeholder="Miles" oninput="quickCalc()" style="width:80px; padding:4px 8px; font-size:0.8em;" />
 										<input type="number" id="quick-gross" placeholder="Gross Pay ($)" oninput="quickCalc()" style="width:110px; padding:4px 8px; font-size:0.8em;" />
 										<span style="font-size: 0.85em;">Est. Net: <strong id="quick-net" style="color:#4CAF50;">$0.00</strong></span>
 									</div>
 								</div>
 
-								<!-- TRUE LIVE TRADINGVIEW COMMODITY TICKERS -->
-								<div style="margin-top: 10px; background: rgba(0, 0, 0, 0.7); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-									<span style="font-size: 0.75em; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; width: 100%; margin-bottom: 2px;">🌐 Live Market Feeds:</span>
-									
-									<!-- WTI Crude Live Feed -->
-									<div class="tradingview-widget-container" style="flex: 1; min-width: 140px;">
-										<div class="tradingview-widget-container__widget"></div>
-										<script type="text/javascript" src="https://s.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-										{
-										"symbol": "TVC:USOIL",
-										"width": "100%",
-										"colorTheme": "dark",
-										"isTransparent": true,
-										"locale": "en"
-										}
-										</script>
-									</div>
-
-									<!-- Brent Crude Live Feed -->
-									<div class="tradingview-widget-container" style="flex: 1; min-width: 140px;">
-										<div class="tradingview-widget-container__widget"></div>
-										<script type="text/javascript" src="https://s.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-										{
-										"symbol": "TVC:UKOIL",
-										"width": "100%",
-										"colorTheme": "dark",
-										"isTransparent": true,
-										"locale": "en"
-										}
-										</script>
-									</div>
+								<div style="margin-top: 10px; background: rgba(0, 0, 0, 0.85); padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.25); width: 100%;">
+	<div style="font-size: 0.75em; color: #aaa; text-align: center; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">🌐 Live International Crude Oil Feed</div>
+	<div class="tradingview-widget-container" style="width: 100%; height: 40px;">
+		<div class="tradingview-widget-container__widget"></div>
+		<script type="text/javascript" src="https://s.tradingview.com/external-embedding/embed-widget-ticker.js" async>
+		{
+		"symbols": [
+			{ "description": "WTI Crude", "proName": "TVC:USOIL" },
+			{ "description": "Brent Crude", "proName": "TVC:UKOIL" }
+		],
+		"colorTheme": "dark",
+		"isTransparent": true,
+		"showSymbolLogo": true,
+		"locale": "en"
+		}
+		</script>
+	</div>
+</div>
 								</div>
 
 							</div>
