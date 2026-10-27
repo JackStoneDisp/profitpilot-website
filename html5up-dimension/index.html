@@ -30,19 +30,112 @@
 							</div>
 						</div>
 						<nav>
-							<ul>
-								<li><a href="#intro">Intro</a></li>
-								<li><a href="#services">services</a></li>
-								<li><a href="#about">About</a></li>
-								<li><a href="#contact">Contact</a></li>
-								<!--<li><a href="#elements">Elements</a></li>-->
-							</ul>
-						</nav>
+    <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#fuel">Fuel & Hubs</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#onboarding">Onboarding</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+    </ul>
+</nav>
 					</header>
 
 				<!-- Main -->
 					<div id="main">
+<!-- Fuel & Hubs -->
+<article id="fuel">
+    <h2 class="major">US Freight Hubs & Diesel Rates</h2>
+    <p>Track regional diesel benchmarks and estimated fuel costs per mile across major US dispatch corridors.</p>
 
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Dispatch Hub / Region</th>
+                    <th>Avg. Diesel ($/gal)</th>
+                    <th>Est. Cost/Mile (6.5 MPG)</th>
+                    <th>Trend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Midwest</strong> (Chicago, IL / Indianapolis, IN)</td>
+                    <td>$3.85</td>
+                    <td>$0.59 / mi</td>
+                    <td><span style="color: #4CAF50;">↓ Stable</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Gulf Coast</strong> (Dallas, TX / Houston, TX)</td>
+                    <td>$3.55</td>
+                    <td>$0.55 / mi</td>
+                    <td><span style="color: #4CAF50;">↓ Down</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Southeast</strong> (Atlanta, GA / Memphis, TN)</td>
+                    <td>$3.70</td>
+                    <td>$0.57 / mi</td>
+                    <td><span style="color: #FF5722;">↑ Up</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Northeast</strong> (Harrisburg, PA / Elizabeth, NJ)</td>
+                    <td>$3.95</td>
+                    <td>$0.61 / mi</td>
+                    <td><span style="color: #4CAF50;">↓ Stable</span></td>
+                </tr>
+                <tr>
+                    <td><strong>West Coast</strong> (Los Angeles, CA / Ontario, CA)</td>
+                    <td>$4.65</td>
+                    <td>$0.72 / mi</td>
+                    <td><span style="color: #FF5722;">↑ Up</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="font-size: 0.85em; opacity: 0.8;"><em>*Note: Benchmarks based on U.S. EIA On-Highway Diesel averages and standard 6.5 MPG Class-8 semi-truck fuel economy.</em></p>
+<hr />
+<h3>Trip Fuel Cost Calculator</h3>
+<p>Estimate total fuel expense and net cost per mile before accepting a load offer.</p>
+
+<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
+    <div class="fields">
+        <div class="field half">
+            <label for="trip-miles">Total Trip Miles</label>
+            <input type="number" id="trip-miles" placeholder="e.g., 850" value="850" oninput="calculateFuel()" />
+        </div>
+        <div class="field half">
+            <label for="fuel-price">Local Diesel Price ($/gal)</label>
+            <input type="number" step="0.01" id="fuel-price" placeholder="e.g., 3.85" value="3.85" oninput="calculateFuel()" />
+        </div>
+        <div class="field half">
+            <label for="truck-mpg">Average Truck MPG</label>
+            <input type="number" step="0.1" id="truck-mpg" placeholder="6.5" value="6.5" oninput="calculateFuel()" />
+        </div>
+    </div>
+
+    <div style="margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; text-align: center;">
+        <p style="margin-bottom: 5px;">Estimated Total Fuel Cost: <strong id="total-fuel-cost" style="color: #4CAF50; font-size: 1.2em;">$503.46</strong></p>
+        <p style="margin-bottom: 0;">Fuel Cost Per Mile (FCPM): <strong id="fcpm-result" style="color: #2196F3; font-size: 1.1em;">$0.59 / mi</strong></p>
+    </div>
+</div>
+
+<script>
+function calculateFuel() {
+    const miles = parseFloat(document.getElementById('trip-miles').value) || 0;
+    const price = parseFloat(document.getElementById('fuel-price').value) || 0;
+    const mpg = parseFloat(document.getElementById('truck-mpg').value) || 6.5;
+
+    if (mpg > 0) {
+        const totalGallons = miles / mpg;
+        const totalCost = totalGallons * price;
+        const fcpm = price / mpg;
+
+        document.getElementById('total-fuel-cost').innerText = '$' + totalCost.toFixed(2);
+        document.getElementById('fcpm-result').innerText = '$' + fcpm.toFixed(2) + ' / mi';
+    }
+}
+</script> </article>
 						<!-- Intro -->
 							<article id="intro">
     <h2 class="major">Welcome to ProfitPilot</h2>
