@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 <!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+	Dimension by HTML5 UP | ProfitPilot Logistics Utility Upgrade
 -->
 <html>
 	<head>
@@ -22,439 +20,240 @@
 					<header id="header">
 						<div class="logo">
 							<img src="images/logo.png" alt="ProfitPilot Logistics Logo" class="custom-logo" />
-</div>
+						</div>
 						<div class="content">
 							<div class="inner">
 								<h1>We Handle the Hassle. You Haul the Profit.</h1>
 								<p>Reliable freight dispatching and back-office support tailored for independent owner-operators and fleets.</p>
+								
+								<!-- INSTANT UTILITY WIDGETS ON HOME PAGE -->
+								<div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 25px; text-align: left;">
+									
+									<!-- Fuel Dropdown Widget -->
+									<div style="flex: 1; min-width: 250px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+										<h4 style="margin-bottom: 10px; color: #fff;">⛽ Quick Fuel Rate Checker</h4>
+										<label for="hub-select" style="font-size: 0.8em; margin-bottom: 5px;">Select Dispatch Hub:</label>
+										<select id="hub-select" onchange="updateHubData()" style="background: #222; color: #fff; border: 1px solid #444; padding: 8px; border-radius: 4px; width: 100%; margin-bottom: 10px;">
+											<option value="">-- Choose Hub / City --</option>
+											<option value="3.85|0.59|Stable">Chicago, IL (Midwest)</option>
+											<option value="3.55|0.55|Down">Dallas, TX (Gulf Coast)</option>
+											<option value="3.70|0.57|Up">Atlanta, GA (Southeast)</option>
+											<option value="3.95|0.61|Stable">Harrisburg, PA (Northeast)</option>
+											<option value="4.65|0.72|Up">Los Angeles, CA (West Coast)</option>
+											<option value="3.90|0.60|Stable">Indianapolis, IN</option>
+											<option value="3.82|0.59|Down">Houston, TX</option>
+											<option value="3.75|0.58|Stable">Memphis, TN</option>
+											<option value="4.05|0.62|Up">Elizabeth, NJ</option>
+											<option value="4.55|0.70|Up">Seattle, WA</option>
+											<option value="3.88|0.60|Stable">Columbus, OH</option>
+											<option value="3.80|0.58|Down">Kansas City, MO</option>
+											<option value="3.92|0.60|Up">Charlotte, NC</option>
+											<option value="3.78|0.58|Stable">Jacksonville, FL</option>
+											<option value="4.50|0.69|Up">Stockton, CA</option>
+											<option value="3.84|0.59|Stable">Louisville, KY</option>
+											<option value="3.89|0.60|Stable">Nashville, TN</option>
+											<option value="3.96|0.61|Up">Denver, CO</option>
+											<option value="3.76|0.58|Down">Oklahoma City, OK</option>
+											<option value="4.10|0.63|Up">Phoenix, AZ</option>
+										</select>
+										<div id="hub-result" style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; display: none;">
+											Avg Diesel: <span id="res-price" style="color:#4CAF50; font-weight:bold;">-</span> | Cost/Mi: <span id="res-fcpm" style="color:#2196F3; font-weight:bold;">-</span> | Trend: <span id="res-trend">-</span>
+										</div>
+									</div>
+
+									<!-- Quick Trip Calculator Widget -->
+									<div style="flex: 1; min-width: 250px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
+										<h4 style="margin-bottom: 10px; color: #fff;">🧮 Trip Fuel Calculator</h4>
+										<div style="display: flex; gap: 8px; margin-bottom: 8px;">
+											<input type="number" id="home-miles" placeholder="Miles (e.g. 800)" oninput="calcHome()" style="background:#222; color:#fff; border:1px solid #444; padding:6px; font-size:0.85em; width:50%;" />
+											<input type="number" step="0.01" id="home-price" placeholder="Price/Gal ($)" oninput="calcHome()" style="background:#222; color:#fff; border:1px solid #444; padding:6px; font-size:0.85em; width:50%;" />
+										</div>
+										<div style="font-size: 0.85em; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 4px; text-align: center;">
+											Total Fuel: <strong id="home-total" style="color: #4CAF50;">$0.00</strong> | FCPM: <strong id="home-fcpm" style="color: #2196F3;">$0.00</strong>
+										</div>
+									</div>
+
+								</div>
+
 							</div>
 						</div>
 						<nav>
-    <ul>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#fuel">Fuel & Hubs</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#onboarding">Onboarding</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact Us</a></li>
-    </ul>
-</nav>
+							<ul>
+								<li><a href="#services">Services</a></li>
+								<li><a href="#pricing">Pricing</a></li>
+								<li><a href="#fuel">Fuel Hubs & Calc</a></li>
+								<li><a href="#about">About</a></li>
+								<li><a href="#onboarding">Onboarding</a></li>
+								<li><a href="#faq">FAQ</a></li>
+								<li><a href="#contact">Contact Us</a></li>
+							</ul>
+						</nav>
 					</header>
 
 				<!-- Main -->
 					<div id="main">
-<!-- Fuel & Hubs -->
-<article id="fuel">
-    <h2 class="major">US Freight Hubs & Diesel Rates</h2>
-    <p>Track regional diesel benchmarks and estimated fuel costs per mile across major US dispatch corridors.</p>
 
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>Dispatch Hub / Region</th>
-                    <th>Avg. Diesel ($/gal)</th>
-                    <th>Est. Cost/Mile (6.5 MPG)</th>
-                    <th>Trend</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Midwest</strong> (Chicago, IL / Indianapolis, IN)</td>
-                    <td>$3.85</td>
-                    <td>$0.59 / mi</td>
-                    <td><span style="color: #4CAF50;">↓ Stable</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Gulf Coast</strong> (Dallas, TX / Houston, TX)</td>
-                    <td>$3.55</td>
-                    <td>$0.55 / mi</td>
-                    <td><span style="color: #4CAF50;">↓ Down</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Southeast</strong> (Atlanta, GA / Memphis, TN)</td>
-                    <td>$3.70</td>
-                    <td>$0.57 / mi</td>
-                    <td><span style="color: #FF5722;">↑ Up</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Northeast</strong> (Harrisburg, PA / Elizabeth, NJ)</td>
-                    <td>$3.95</td>
-                    <td>$0.61 / mi</td>
-                    <td><span style="color: #4CAF50;">↓ Stable</span></td>
-                </tr>
-                <tr>
-                    <td><strong>West Coast</strong> (Los Angeles, CA / Ontario, CA)</td>
-                    <td>$4.65</td>
-                    <td>$0.72 / mi</td>
-                    <td><span style="color: #FF5722;">↑ Up</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <p style="font-size: 0.85em; opacity: 0.8;"><em>*Note: Benchmarks based on U.S. EIA On-Highway Diesel averages and standard 6.5 MPG Class-8 semi-truck fuel economy.</em></p>
-<hr />
-<h3>Trip Fuel Cost Calculator</h3>
-<p>Estimate total fuel expense and net cost per mile before accepting a load offer.</p>
-
-<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
-    <div class="fields">
-        <div class="field half">
-            <label for="trip-miles">Total Trip Miles</label>
-            <input type="number" id="trip-miles" placeholder="e.g., 850" value="850" oninput="calculateFuel()" />
-        </div>
-        <div class="field half">
-            <label for="fuel-price">Local Diesel Price ($/gal)</label>
-            <input type="number" step="0.01" id="fuel-price" placeholder="e.g., 3.85" value="3.85" oninput="calculateFuel()" />
-        </div>
-        <div class="field half">
-            <label for="truck-mpg">Average Truck MPG</label>
-            <input type="number" step="0.1" id="truck-mpg" placeholder="6.5" value="6.5" oninput="calculateFuel()" />
-        </div>
-    </div>
-
-    <div style="margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; text-align: center;">
-        <p style="margin-bottom: 5px;">Estimated Total Fuel Cost: <strong id="total-fuel-cost" style="color: #4CAF50; font-size: 1.2em;">$503.46</strong></p>
-        <p style="margin-bottom: 0;">Fuel Cost Per Mile (FCPM): <strong id="fcpm-result" style="color: #2196F3; font-size: 1.1em;">$0.59 / mi</strong></p>
-    </div>
-</div>
-
-<script>
-function calculateFuel() {
-    const miles = parseFloat(document.getElementById('trip-miles').value) || 0;
-    const price = parseFloat(document.getElementById('fuel-price').value) || 0;
-    const mpg = parseFloat(document.getElementById('truck-mpg').value) || 6.5;
-
-    if (mpg > 0) {
-        const totalGallons = miles / mpg;
-        const totalCost = totalGallons * price;
-        const fcpm = price / mpg;
-
-        document.getElementById('total-fuel-cost').innerText = '$' + totalCost.toFixed(2);
-        document.getElementById('fcpm-result').innerText = '$' + fcpm.toFixed(2) + ' / mi';
-    }
-}
-</script> </article>
-						<!-- Intro -->
-							<article id="intro">
-    <h2 class="major">Welcome to ProfitPilot</h2>
-    <p>At <strong>ProfitPilot Logistics</strong>, we specialize in empowering independent owner-operators and fleet owners across North America. We handle the heavy lifting behind the scenes so you can focus on driving and maximizing your rate-per-mile.</p>
-    <p>From aggressive rate negotiations with top brokers to handling paperwork, rate confirmations, and billing support, we operate as your dedicated back-office partner.</p>
-</article>
-
-						<!-- Work -->
+						<!-- Services -->
 							<article id="services">
-    <h2 class="major">Our Services</h2>
-    <h3>What We Do:</h3>
-    <ul>
-        <li><strong>Top-Rate Negotiation:</strong> Direct broker communication to secure top-paying loads.</li>
-        <li><strong>Dedicated Lane Search:</strong> Consistent route planning for Dry Van, Reefer, Flatbed, and Step Deck.</li>
-        <li><strong>Back-Office & Paperwork:</strong> Carrier setup packets, NOA, COI updates, and rate confirmation management.</li>
-        <li><strong>Invoicing & Factoring Support:</strong> Fast paperwork submission so you get paid without delay.</li>
-        <li><strong>Zero Forced Dispatch:</strong> You maintain 100% control over where and when you drive.</li>
-    </ul>
-</article>
+								<h2 class="major">Our Services</h2>
+								<h3>What We Do:</h3>
+								<ul>
+									<li><strong>Top-Rate Negotiation:</strong> Direct broker communication to secure top-paying loads.</li>
+									<li><strong>Dedicated Lane Search:</strong> Consistent route planning for Dry Van, Reefer, Flatbed, and Step Deck.</li>
+									<li><strong>Back-Office & Paperwork:</strong> Carrier setup packets, NOA, COI updates, and rate confirmation management.</li>
+									<li><strong>Invoicing & Factoring Support:</strong> Fast paperwork submission so you get paid without delay.</li>
+									<li><strong>Zero Forced Dispatch:</strong> You maintain 100% control over where and when you drive.</li>
+								</ul>
+							</article>
+
+						<!-- Pricing -->
+							<article id="pricing">
+								<h2 class="major">Simple, Transparent Pricing</h2>
+								<p>We only make money when you make money. No hidden administration fees, no long-term contracts.</p>
+								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px; text-align: center;">
+									<h3 style="margin-bottom: 5px;">Flat 5% Commission</h3>
+									<p style="margin-bottom: 0;">Per Load | Zero Upfront Costs | No Contracts</p>
+								</div>
+							</article>
+
+						<!-- Fuel & Hubs -->
+							<article id="fuel">
+								<h2 class="major">US Freight Hubs & Diesel Rates</h2>
+								<p>Track regional diesel benchmarks and estimated fuel costs per mile across major US dispatch corridors.</p>
+								
+								<div class="fields">
+									<div class="field">
+										<label>Select Hub / Region</label>
+										<select id="modal-hub-select" onchange="updateModalHub()" style="background:#222; color:#fff;">
+											<option value="">-- Choose Hub / City --</option>
+											<option value="3.85|0.59|Stable">Chicago, IL (Midwest)</option>
+											<option value="3.55|0.55|Down">Dallas, TX (Gulf Coast)</option>
+											<option value="3.70|0.57|Up">Atlanta, GA (Southeast)</option>
+											<option value="3.95|0.61|Stable">Harrisburg, PA (Northeast)</option>
+											<option value="4.65|0.72|Up">Los Angeles, CA (West Coast)</option>
+											<option value="3.90|0.60|Stable">Indianapolis, IN</option>
+											<option value="3.82|0.59|Down">Houston, TX</option>
+											<option value="3.75|0.58|Stable">Memphis, TN</option>
+											<option value="4.05|0.62|Up">Elizabeth, NJ</option>
+											<option value="4.55|0.70|Up">Seattle, WA</option>
+											<option value="3.88|0.60|Stable">Columbus, OH</option>
+											<option value="3.80|0.58|Down">Kansas City, MO</option>
+											<option value="3.92|0.60|Up">Charlotte, NC</option>
+											<option value="3.78|0.58|Stable">Jacksonville, FL</option>
+											<option value="4.50|0.69|Up">Stockton, CA</option>
+											<option value="3.84|0.59|Stable">Louisville, KY</option>
+											<option value="3.89|0.60|Stable">Nashville, TN</option>
+											<option value="3.96|0.61|Up">Denver, CO</option>
+											<option value="3.76|0.58|Down">Oklahoma City, OK</option>
+											<option value="4.10|0.63|Up">Phoenix, AZ</option>
+										</select>
+									</div>
+								</div>
+								
+								<div id="modal-hub-result" style="display:none; background:rgba(255,255,255,0.05); padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;">
+									<p style="margin-bottom:5px;">Average Diesel Price: <strong id="m-price" style="color:#4CAF50;">$0.00</strong></p>
+									<p style="margin-bottom:5px;">Estimated Cost Per Mile (6.5 MPG): <strong id="m-fcpm" style="color:#2196F3;">$0.00</strong></p>
+									<p style="margin-bottom:0;">Market Trend: <strong id="m-trend">-</strong></p>
+								</div>
+
+								<hr />
+								<h3>Trip Fuel Cost Calculator</h3>
+								<p>Estimate total fuel expense and net cost per mile before accepting a load offer.</p>
+
+								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
+									<div class="fields">
+										<div class="field half">
+											<label for="trip-miles">Total Trip Miles</label>
+											<input type="number" id="trip-miles" placeholder="e.g., 850" oninput="calculateFuel()" />
+										</div>
+										<div class="field half">
+											<label for="fuel-price">Local Diesel Price ($/gal)</label>
+											<input type="number" step="0.01" id="fuel-price" placeholder="e.g., 3.85" oninput="calculateFuel()" />
+										</div>
+										<div class="field half">
+											<label for="truck-mpg">Average Truck MPG</label>
+											<input type="number" step="0.1" id="truck-mpg" placeholder="6.5" value="6.5" oninput="calculateFuel()" />
+										</div>
+									</div>
+
+									<div style="margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 6px; text-align: center;">
+										<p style="margin-bottom: 5px;">Estimated Total Fuel Cost: <strong id="total-fuel-cost" style="color: #4CAF50; font-size: 1.2em;">$0.00</strong></p>
+										<p style="margin-bottom: 0;">Fuel Cost Per Mile (FCPM): <strong id="fcpm-result" style="color: #2196F3; font-size: 1.1em;">$0.00 / mi</strong></p>
+									</div>
+								</div>
+							</article>
 
 						<!-- About -->
 							<article id="about">
-    <h2 class="major">Why Choose Us</h2>
-    <p><strong>Your Load. Your Profit. Our Priority.</strong></p>
-    <p>We pride ourselves on full transparency, clear communication, and dedicated support. Unlike large call-center dispatchers, we provide personalized attention to every carrier we partner with.</p>
-    <h3>Equipment Types We Dispatch:</h3>
-    <ul>
-        <li>Dry Van (53')</li>
-        <li>Reefer</li>
-        <li>Flatbed & Step Deck</li>
-        <li>Power Only & Box Trucks</li>
-    </ul>
-</article>
+								<h2 class="major">Why Choose Us</h2>
+								<p><strong>Your Load. Your Profit. Our Priority.</strong></p>
+								<p>We pride ourselves on full transparency, clear communication, and dedicated support. Unlike large call-center dispatchers, we provide personalized attention to every carrier we partner with.</p>
+								<h3>Equipment Types We Dispatch:</h3>
+								<ul>
+									<li>Dry Van (53')</li>
+									<li>Reefer</li>
+									<li>Flatbed & Step Deck</li>
+									<li>Power Only & Box Trucks</li>
+								</ul>
+							</article>
+
+						<!-- Onboarding -->
+							<article id="onboarding">
+								<h2 class="major">Carrier Onboarding</h2>
+								<p>Have your active MC/DOT authority, W-9, and Certificate of Insurance (COI) ready to start getting dispatched today.</p>
+							</article>
+
+						<!-- FAQ -->
+							<article id="faq">
+								<h2 class="major">Frequently Asked Questions</h2>
+								<h4>Do you force dispatch?</h4>
+								<p>Never. You maintain 100% control over your routes and loads.</p>
+							</article>
 
 						<!-- Contact -->
 							<article id="contact">
-    <h2 class="major">Get Dispatched</h2>
-    <p>Ready to boost your profitability? Send us a message or request a callback.</p>
-    <form method="post" action="https://formspree.io/f/xppqkqrb">
-        <div class="fields">
-            <div class="field half">
-                <label for="name">Name / Fleet Name</label>
-                <input type="text" name="name" id="name" required />
-            </div>
-            <div class="field half">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required />
-            </div>
-            <div class="field">
-                <label for="equipment">Equipment Type & MC Number</label>
-                <input type="text" name="equipment" id="equipment" placeholder="e.g., Dry Van / MC# 123456" />
-            </div>
-            <div class="field">
-                <label for="message">Message</label>
-                <textarea name="message" id="message" rows="4"></textarea>
-            </div>
-        </div>
-        <ul class="actions">
-            <li><input type="submit" value="Send Message" class="primary" /></li>
-            <li><input type="reset" value="Reset" /></li>
-        </ul>
-    </form>
-<ul class="icons">
-    <li><a href="https://facebook.com/profitpilotlogistics" class="icon brands fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
-    <li><a href="https://instagram.com/profitpilotlogistics" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-    <li><a href="https://youtube.com/@profitpilotlogistics" class="icon brands fa-youtube" target="_blank"><span class="label">YouTube</span></a></li>
-    <li><a href="https://tiktok.com/@profitpilotlogistics" class="icon brands fa-tiktok" target="_blank"><span class="label">TikTok</span></a></li>
-    <li><a href="https://x.com/profitpilotlog" class="icon brands fa-twitter" target="_blank"><span class="label">X</span></a></li>
-</ul>
-<p style="text-align: center; margin-top: 10px;"><strong>Email:</strong> <a href="mailto:dispatch@profitpilotlogistics.com">dispatch@profitpilotlogistics.com</a></p></article>
-
-						<!-- Elements -->
-							<article id="elements">
-								<h2 class="major">Elements</h2>
-
-								<section>
-									<h3 class="major">Text</h3>
-									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-									<hr />
-									<h2>Heading Level 2</h2>
-									<h3>Heading Level 3</h3>
-									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
-									<h6>Heading Level 6</h6>
-									<hr />
-									<h4>Blockquote</h4>
-									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
-									<h4>Preformatted</h4>
-									<pre><code>i = 0;
-
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
-}
-
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
-								</section>
-
-								<section>
-									<h3 class="major">Lists</h3>
-
-									<h4>Unordered</h4>
-									<ul>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
-
-									<h4>Alternate</h4>
-									<ul class="alt">
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
-
-									<h4>Ordered</h4>
-									<ol>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis viverra.</li>
-										<li>Felis enim feugiat.</li>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis lorem.</li>
-										<li>Felis enim et feugiat.</li>
-									</ol>
-									<h4>Icons</h4>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-									</ul>
-
-									<h4>Actions</h4>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-								</section>
-
-								<section>
-									<h3 class="major">Table</h3>
-									<h4>Default</h4>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-
-									<h4>Alternate</h4>
-									<div class="table-wrapper">
-										<table class="alt">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-								</section>
-
-								<section>
-									<h3 class="major">Buttons</h3>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Primary</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button">Default</a></li>
-										<li><a href="#" class="button small">Small</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
-										<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-									</ul>
-									<ul class="actions">
-										<li><span class="button primary disabled">Disabled</span></li>
-										<li><span class="button disabled">Disabled</span></li>
-									</ul>
-								</section>
-
-								<section>
-									<h3 class="major">Form</h3>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="demo-name">Name</label>
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
-											</div>
-											<div class="field half">
-												<label for="demo-email">Email</label>
-												<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
-											</div>
-											<div class="field">
-												<label for="demo-category">Category</label>
-												<select name="demo-category" id="demo-category">
-													<option value="">-</option>
-													<option value="1">Manufacturing</option>
-													<option value="1">Shipping</option>
-													<option value="1">Administration</option>
-													<option value="1">Human Resources</option>
-												</select>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-												<label for="demo-priority-low">Low</label>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-high" name="demo-priority">
-												<label for="demo-priority-high">High</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-copy" name="demo-copy">
-												<label for="demo-copy">Email me a copy</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-human" name="demo-human" checked>
-												<label for="demo-human">Not a robot</label>
-											</div>
-											<div class="field">
-												<label for="demo-message">Message</label>
-												<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-											</div>
+								<h2 class="major">Get Dispatched</h2>
+								<p>Ready to boost your profitability? Send us a message or request a callback.</p>
+								<form method="post" action="https://formspree.io/f/xppqkqrb">
+									<div class="fields">
+										<div class="field half">
+											<label for="name">Name / Fleet Name</label>
+											<input type="text" name="name" id="name" required />
 										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</form>
-								</section>
-
+										<div class="field half">
+											<label for="email">Email</label>
+											<input type="email" name="email" id="email" required />
+										</div>
+										<div class="field">
+											<label for="equipment">Equipment Type & MC Number</label>
+											<input type="text" name="equipment" id="equipment" placeholder="e.g., Dry Van / MC# 123456" />
+										</div>
+										<div class="field">
+											<label for="message">Message</label>
+											<textarea name="message" id="message" rows="4"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send Message" class="primary" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
+								<ul class="icons">
+									<li><a href="https://facebook.com/profitpilotlogistics" class="icon brands fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
+									<li><a href="https://instagram.com/profitpilotlogistics" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+									<li><a href="https://youtube.com/@profitpilotlogistics" class="icon brands fa-youtube" target="_blank"><span class="label">YouTube</span></a></li>
+									<li><a href="https://tiktok.com/@profitpilotlogistics" class="icon brands fa-tiktok" target="_blank"><span class="label">TikTok</span></a></li>
+									<li><a href="https://x.com/profitpilotlog" class="icon brands fa-twitter" target="_blank"><span class="label">X</span></a></li>
+								</ul>
+								<p style="text-align: center; margin-top: 10px;"><strong>Email:</strong> <a href="mailto:dispatch@profitpilotlogistics.com">dispatch@profitpilotlogistics.com</a></p>
 							</article>
 
 					</div>
 
 				<!-- Footer -->
 					<footer id="footer">
-    <p class="copyright">&copy; ProfitPilot Logistics. <em>Your Load. Your Profit. Our Priority.</em></p>
-</footer>
+						<p class="copyright">&copy; ProfitPilot Logistics. <em>Your Load. Your Profit. Our Priority.</em></p>
+					</footer>
 
 			</div>
 
@@ -467,6 +266,52 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				function updateHubData() {
+					const val = document.getElementById('hub-select').value;
+					const resDiv = document.getElementById('hub-result');
+					if (!val) { resDiv.style.display = 'none'; return; }
+					const parts = val.split('|');
+					document.getElementById('res-price').innerText = '$' + parts[0];
+					document.getElementById('res-fcpm').innerText = '$' + parts[1] + '/mi';
+					document.getElementById('res-trend').innerText = parts[2];
+					resDiv.style.display = 'block';
+				}
 
+				function updateModalHub() {
+					const val = document.getElementById('modal-hub-select').value;
+					const resDiv = document.getElementById('modal-hub-result');
+					if (!val) { resDiv.style.display = 'none'; return; }
+					const parts = val.split('|');
+					document.getElementById('m-price').innerText = '$' + parts[0];
+					document.getElementById('m-fcpm').innerText = '$' + parts[1] + ' / mi';
+					document.getElementById('m-trend').innerText = parts[2];
+					resDiv.style.display = 'block';
+				}
+
+				function calcHome() {
+					const miles = parseFloat(document.getElementById('home-miles').value) || 0;
+					const price = parseFloat(document.getElementById('home-price').value) || 0;
+					const cost = (miles / 6.5) * price;
+					const fcpm = price / 6.5;
+					document.getElementById('home-total').innerText = '$' + cost.toFixed(2);
+					document.getElementById('home-fcpm').innerText = '$' + fcpm.toFixed(2);
+				}
+
+				function calculateFuel() {
+					const miles = parseFloat(document.getElementById('trip-miles').value) || 0;
+					const price = parseFloat(document.getElementById('fuel-price').value) || 0;
+					const mpg = parseFloat(document.getElementById('truck-mpg').value) || 6.5;
+					if (mpg > 0 && miles > 0 && price > 0) {
+						const totalCost = (miles / mpg) * price;
+						const fcpm = price / mpg;
+						document.getElementById('total-fuel-cost').innerText = '$' + totalCost.toFixed(2);
+						document.getElementById('fcpm-result').innerText = '$' + fcpm.toFixed(2) + ' / mi';
+					} else {
+						document.getElementById('total-fuel-cost').innerText = '$0.00';
+						document.getElementById('fcpm-result').innerText = '$0.00 / mi';
+					}
+				}
+			</script>
 	</body>
 </html>
