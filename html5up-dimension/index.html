@@ -111,7 +111,7 @@
 						<!-- Calc & Tools -->
 							<article id="calc">
 								<h2 class="major">Real-World Trip Profitability Calculator</h2>
-								<p>Select your lane across any US freight hub or enter custom miles & gross pay. Click the <strong>[-]</strong> button on any expense to exclude it from your calculation.</p>
+								<p>Select your lane across any US freight hub or enter custom miles & gross pay. Click the <strong>[-]</strong> button on any expense to exclude it.</p>
 
 								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
 									<div class="fields">
@@ -269,6 +269,17 @@
 										<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Total Estimated Expenses:</span> <strong id="master-total-exp" style="color:#FF5722;">$0.00</strong></div>
 										<div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 1.15em;"><span>Estimated Net Profit:</span> <strong id="master-net-profit" style="color:#4CAF50;">$0.00</strong></div>
 										<div style="display: flex; justify-content: space-between; font-size: 1.1em;"><span>Net Profit Per Mile:</span> <strong id="master-net-pm" style="color:#2196F3;">$0.00 / mi</strong></div>
+
+										<!-- TRANSPARENCY NOTE -->
+										<div style="font-size: 0.75em; opacity: 0.75; margin-top: 15px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px; line-height: 1.4;">
+											<strong>NOTE:</strong><br>
+											• <strong>Fuel & DEF:</strong> On-highway diesel fuel consumption & Diesel Exhaust Fluid.<br>
+											• <strong>Maintenance & Tires:</strong> Routine oil changes, tire wear, brake pads & preventative service reserves.<br>
+											• <strong>Fixed Overhead:</strong> Pro-rated commercial truck insurance, truck/trailer financing & permits.<br>
+											• <strong>Tolls, Scales & Misc:</strong> Turnpike/bridge tolls, CAT scale weigh-ins & cargo securement tools.<br>
+											• <strong>Driver Meals & Per Diem:</strong> On-the-road food, shower/parking credits & daily living costs.<br>
+											• <strong>Dispatch & Factoring Fees:</strong> ProfitPilot 5% dispatch commission and standard 2% invoice factoring fee.
+										</div>
 									</div>
 								</div>
 							</article>
@@ -436,7 +447,7 @@
 					"Chicago, IL-Los Angeles, CA": 2100, "Los Angeles, CA-Chicago, IL": 2100,
 					"Atlanta, GA-Dallas, TX": 780, "Dallas, TX-Atlanta, GA": 780,
 					"Chicago, IL-Harrisburg, PA": 600, "Harrisburg, PA-Chicago, IL": 600,
-					"Memphis, TN-Dallas, TX": 450, "Dallas, TX-Memphis, TN": 450,
+					"Memphis, TN-Dallas, TX": 450, "Dallas, TN-Memphis, TN": 450,
 					"Chicago, IL-New York, NY": 790, "New York, NY-Chicago, IL": 790,
 					"Atlanta, GA-Miami, FL": 660, "Miami, FL-Atlanta, GA": 660,
 					"Los Angeles, CA-Seattle, WA": 1130, "Seattle, WA-Los Angeles, CA": 1130,
@@ -444,7 +455,10 @@
 					"Chicago, IL-Spokane, WA": 1950, "Spokane, WA-Chicago, IL": 1950,
 					"Dallas, TX-Spokane, WA": 1850, "Spokane, WA-Dallas, TX": 1850,
 					"Atlanta, GA-Seattle, WA": 2350, "Seattle, WA-Atlanta, GA": 2350,
-					"New York, NY-Los Angeles, CA": 2800, "Los Angeles, CA-New York, NY": 2800
+					"New York, NY-Los Angeles, CA": 2800, "Los Angeles, CA-New York, NY": 2800,
+					"Columbus, OH-Charlotte, NC": 410, "Charlotte, NC-Columbus, OH": 410,
+					"Columbus, OH-Chicago, IL": 350, "Chicago, IL-Columbus, OH": 350,
+					"Atlanta, GA-Charlotte, NC": 245, "Charlotte, NC-Atlanta, GA": 245
 				};
 
 				// Expense inclusion toggles
@@ -498,8 +512,8 @@
 							} else if (distanceMatrix[key2]) {
 								milesInput.value = distanceMatrix[key2];
 							} else {
-								// Dynamic intelligent fallback based on coast-to-coast vs regional estimation
-								milesInput.value = 1250;
+								// Leave blank instead of hardcoding a wrong default number so user can input precise miles safely
+								milesInput.value = "";
 							}
 						}
 					}
