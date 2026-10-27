@@ -66,11 +66,37 @@
 									</div>
 								</div>
 
-								<!-- CLEAN LIVE INTERNATIONAL CRUDE OIL BENCHMARK BAR -->
-								<div style="margin-top: 10px; background: rgba(0, 0, 0, 0.7); padding: 8px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-size: 0.8em;">
-									<span style="color: #aaa; text-transform: uppercase; letter-spacing: 0.5px;">🌐 Global Fuel Benchmarks:</span>
-									<span>WTI Crude: <strong style="color: #4CAF50;">$74.20 / bbl</strong></span>
-									<span>Brent Crude: <strong style="color: #4CAF50;">$78.65 / bbl</strong></span>
+								<!-- TRUE LIVE TRADINGVIEW COMMODITY TICKERS -->
+								<div style="margin-top: 10px; background: rgba(0, 0, 0, 0.7); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+									<span style="font-size: 0.75em; color: #aaa; text-transform: uppercase; letter-spacing: 0.5px; width: 100%; margin-bottom: 2px;">🌐 Live Market Feeds:</span>
+									
+									<!-- WTI Crude Live Feed -->
+									<div class="tradingview-widget-container" style="flex: 1; min-width: 140px;">
+										<div class="tradingview-widget-container__widget"></div>
+										<script type="text/javascript" src="https://s.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+										{
+										"symbol": "TVC:USOIL",
+										"width": "100%",
+										"colorTheme": "dark",
+										"isTransparent": true,
+										"locale": "en"
+										}
+										</script>
+									</div>
+
+									<!-- Brent Crude Live Feed -->
+									<div class="tradingview-widget-container" style="flex: 1; min-width: 140px;">
+										<div class="tradingview-widget-container__widget"></div>
+										<script type="text/javascript" src="https://s.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+										{
+										"symbol": "TVC:UKOIL",
+										"width": "100%",
+										"colorTheme": "dark",
+										"isTransparent": true,
+										"locale": "en"
+										}
+										</script>
+									</div>
 								</div>
 
 							</div>
