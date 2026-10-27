@@ -1,571 +1,208 @@
-<!DOCTYPE HTML>
-<!--
-	Dimension by HTML5 UP | ProfitPilot Logistics Utility Upgrade
--->
-<html>
-	<head>
-		<title>ProfitPilot Logistics | Freight Dispatch Services</title>
-		<link rel="icon" href="images/favicon.PNG" type="image/PNG">
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<style>
-			/* Fix input text visibility inside dark modals */
-			input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="search"], input[type="url"], input[type="number"], select, textarea {
-				background: rgba(0, 0, 0, 0.85) !important;
-				color: #ffffff !important;
-				border: 1px solid rgba(255, 255, 255, 0.3) !important;
-			}
-			input::placeholder, textarea::placeholder {
-				color: #aaaaaa !important;
-			}
-			select option {
-				background: #1a1a1a !important;
-				color: #ffffff !important;
-			}
-			.toggle-btn {
-				background: rgba(255, 255, 255, 0.1);
-				border: 1px solid rgba(255, 255, 255, 0.3);
-				color: #ff5722;
-				padding: 2px 8px;
-				border-radius: 4px;
-				cursor: pointer;
-				font-size: 0.8em;
-				transition: all 0.2s;
-			}
-			.toggle-btn.excluded {
-				background: #ff5722;
-				color: #fff;
-				text-decoration: line-through;
-			}
-		</style>
-	</head>
-	<body class="is-preload">
+<script>
+    // ============================================================
+    // CONFIGURATION
+    // ============================================================
+    // Replace this with your actual OpenRouteService API key
+    const ORS_API_KEY = 'YOUR_OPENROUTESERVICE_API_KEY_HERE';
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+    // Unified expense rates (per mile) — used by BOTH calculators
+    const EXPENSE_RATES = {
+        fuel: 0.65,
+        maint: 0.20,
+        overhead: 0.32,
+        tolls: 0.08,
+        meals: 0.07
+    };
+    const FEE_RATE = 0.07; // Combined 5% dispatch + 2% factoring (only if both apply)
 
-				<!-- Header -->
-					<header id="header">
-						<div class="logo">
-							<img src="images/logo.png" alt="ProfitPilot Logistics Logo" class="custom-logo" />
-						</div>
-						<div class="content">
-							<div class="inner">
-								<h1>We Handle the Hassle. You Haul the Profit.</h1>
-								<p>Reliable freight dispatching and back-office support tailored for independent owner-operators and fleets.</p>
-								
-								<!-- COMPACT HOME PAGE QUICK RATE CHECKER -->
-								<div style="background: rgba(0, 0, 0, 0.75); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.25); margin-top: 15px; text-align: left;">
-									<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-										<span style="font-size: 0.85em; font-weight: bold; color: #fff;">⚡ Quick Estimator:</span>
-										<input type="number" id="quick-miles" placeholder="Miles" oninput="quickCalc()" style="width:80px; padding:4px 8px; font-size:0.8em;" />
-										<input type="number" id="quick-gross" placeholder="Gross Pay ($)" oninput="quickCalc()" style="width:110px; padding:4px 8px; font-size:0.8em;" />
-										<span style="font-size: 0.85em;">Est. Net: <strong id="quick-net" style="color:#4CAF50;">$0.00</strong></span>
-									</div>
-								</div>
+    // Expense inclusion toggles
+    const activeExpenses = {
+        fuel: true,
+        maint: true,
+        overhead: true,
+        tolls: true,
+        meals: true,
+        fees: true
+    };
 
-							</div>
-						</div>
-						<nav>
-							<ul>
-								<li><a href="#services">Services</a></li>
-								<li><a href="#pricing">Pricing</a></li>
-								<li><a href="#calc">Calc & Tools</a></li>
-								<li><a href="#fuel">Fuel Hubs</a></li>
-								<li><a href="#about">About</a></li>
-								<li><a href="#onboarding">Onboarding</a></li>
-								<li><a href="#faq">FAQ</a></li>
-								<li><a href="#contact">Contact Us</a></li>
-							</ul>
-						</nav>
-					</header>
+    // Cache to avoid re-geocoding the same city repeatedly
+    const geoCache = {};
 
-				<!-- Main -->
-					<div id="main">
+    // ============================================================
+    // GEOCODING: City Name -> [lon, lat]
+    // ============================================================
+    async function geocodeCity(cityName) {
+        if (geoCache[cityName]) return geoCache[cityName];
 
-						<!-- Services -->
-							<article id="services">
-								<h2 class="major">Our Services</h2>
-								<h3>What We Do:</h3>
-								<ul>
-									<li><strong>Top-Rate Negotiation:</strong> Direct broker communication to secure top-paying loads.</li>
-									<li><strong>Dedicated Lane Search:</strong> Consistent route planning for Dry Van, Reefer, Flatbed, and Step Deck.</li>
-									<li><strong>Back-Office & Paperwork:</strong> Carrier setup packets, NOA, COI updates, and rate confirmation management.</li>
-									<li><strong>Invoicing & Factoring Support:</strong> Fast paperwork submission so you get paid without delay.</li>
-									<li><strong>Zero Forced Dispatch:</strong> You maintain 100% control over where and when you drive.</li>
-								</ul>
-							</article>
+        // Strip the state abbreviation for cleaner geocoding
+        const cleanName = cityName.split(',')[0].trim();
 
-						<!-- Pricing -->
-							<article id="pricing">
-								<h2 class="major">Simple, Transparent Pricing</h2>
-								<p>We only make money when you make money. No hidden administration fees, no long-term contracts.</p>
-								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px; text-align: center;">
-									<h3 style="margin-bottom: 5px;">Flat 5% Commission</h3>
-									<p style="margin-bottom: 0;">Per Load | Zero Upfront Costs | No Contracts</p>
-								</div>
-							</article>
+        const url = `https://api.openrouteservice.org/geocode/search?api_key=${ORS_API_KEY}&text=${encodeURIComponent(cleanName)}&size=1&boundary.country=US`;
 
-						<!-- Calc & Tools -->
-							<article id="calc">
-								<h2 class="major">Real-World Trip Profitability Calculator</h2>
-								<p>Select your lane across any US freight hub or enter custom miles & gross pay. Click the <strong>[-]</strong> button on any expense to exclude it.</p>
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Geocoding failed for ' + cityName);
 
-								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
-									<div class="fields">
-										<div class="field half">
-											<label for="route-from">Origin (From):</label>
-											<select id="route-from" onchange="calculateMasterProfit()">
-												<option value="">-- Select Origin Hub --</option>
-												<option value="Chicago, IL">Chicago, IL (Midwest Hub)</option>
-												<option value="Indianapolis, IN">Indianapolis, IN</option>
-												<option value="Detroit, MI">Detroit, MI</option>
-												<option value="Columbus, OH">Columbus, OH</option>
-												<option value="Cincinnati, OH">Cincinnati, OH</option>
-												<option value="St. Louis, MO">St. Louis, MO</option>
-												<option value="Kansas City, MO">Kansas City, MO</option>
-												<option value="Minneapolis, MN">Minneapolis, MN</option>
-												<option value="Milwaukee, WI">Milwaukee, WI</option>
-												<option value="Grand Rapids, MI">Grand Rapids, MI</option>
-												<option value="New York, NY">New York, NY</option>
-												<option value="Philadelphia, PA">Philadelphia, PA</option>
-												<option value="Harrisburg, PA">Harrisburg, PA</option>
-												<option value="Pittsburgh, PA">Pittsburgh, PA</option>
-												<option value="Newark, NJ">Newark, NJ</option>
-												<option value="Boston, MA">Boston, MA</option>
-												<option value="Buffalo, NY">Buffalo, NY</option>
-												<option value="Baltimore, MD">Baltimore, MD</option>
-												<option value="Atlanta, GA">Atlanta, GA (Southeast Hub)</option>
-												<option value="Charlotte, NC">Charlotte, NC</option>
-												<option value="Memphis, TN">Memphis, TN</option>
-												<option value="Nashville, TN">Nashville, TN</option>
-												<option value="Jacksonville, FL">Jacksonville, FL</option>
-												<option value="Miami, FL">Miami, FL</option>
-												<option value="Savannah, GA">Savannah, GA</option>
-												<option value="Birmingham, AL">Birmingham, AL</option>
-												<option value="Louisville, KY">Louisville, KY</option>
-												<option value="Richmond, VA">Richmond, VA</option>
-												<option value="Dallas, TX">Dallas-Fort Worth, TX</option>
-												<option value="Houston, TX">Houston, TX</option>
-												<option value="San Antonio, TX">San Antonio, TX</option>
-												<option value="Austin, TX">Austin, TX</option>
-												<option value="Oklahoma City, OK">Oklahoma City, OK</option>
-												<option value="Tulsa, OK">Tulsa, OK</option>
-												<option value="New Orleans, LA">New Orleans, LA</option>
-												<option value="Little Rock, AR">Little Rock, AR</option>
-												<option value="Los Angeles, CA">Los Angeles / Long Beach, CA</option>
-												<option value="Inland Empire, CA">Inland Empire (Ontario/Fontana), CA</option>
-												<option value="Stockton, CA">Stockton, CA</option>
-												<option value="San Francisco, CA">San Francisco, CA</option>
-												<option value="Phoenix, AZ">Phoenix, AZ</option>
-												<option value="Las Vegas, NV">Las Vegas, NV</option>
-												<option value="Salt Lake City, UT">Salt Lake City, UT</option>
-												<option value="Denver, CO">Denver, CO</option>
-												<option value="Albuquerque, NM">Albuquerque, NM</option>
-												<option value="Seattle, WA">Seattle, WA</option>
-												<option value="Portland, OR">Portland, OR</option>
-												<option value="Boise, ID">Boise, ID</option>
-												<option value="Spokane, WA">Spokane, WA</option>
-											</select>
-										</div>
-										<div class="field half">
-											<label for="route-to">Destination (To):</label>
-											<select id="route-to" onchange="calculateMasterProfit()">
-												<option value="">-- Select Destination Hub --</option>
-												<option value="Chicago, IL">Chicago, IL (Midwest Hub)</option>
-												<option value="Indianapolis, IN">Indianapolis, IN</option>
-												<option value="Detroit, MI">Detroit, MI</option>
-												<option value="Columbus, OH">Columbus, OH</option>
-												<option value="Cincinnati, OH">Cincinnati, OH</option>
-												<option value="St. Louis, MO">St. Louis, MO</option>
-												<option value="Kansas City, MO">Kansas City, MO</option>
-												<option value="Minneapolis, MN">Minneapolis, MN</option>
-												<option value="Milwaukee, WI">Milwaukee, WI</option>
-												<option value="Grand Rapids, MI">Grand Rapids, MI</option>
-												<option value="New York, NY">New York, NY</option>
-												<option value="Philadelphia, PA">Philadelphia, PA</option>
-												<option value="Harrisburg, PA">Harrisburg, PA</option>
-												<option value="Pittsburgh, PA">Pittsburgh, PA</option>
-												<option value="Newark, NJ">Newark, NJ</option>
-												<option value="Boston, MA">Boston, MA</option>
-												<option value="Buffalo, NY">Buffalo, NY</option>
-												<option value="Baltimore, MD">Baltimore, MD</option>
-												<option value="Atlanta, GA">Atlanta, GA (Southeast Hub)</option>
-												<option value="Charlotte, NC">Charlotte, NC</option>
-												<option value="Memphis, TN">Memphis, TN</option>
-												<option value="Nashville, TN">Nashville, TN</option>
-												<option value="Jacksonville, FL">Jacksonville, FL</option>
-												<option value="Miami, FL">Miami, FL</option>
-												<option value="Savannah, GA">Savannah, GA</option>
-												<option value="Birmingham, AL">Birmingham, AL</option>
-												<option value="Louisville, KY">Louisville, KY</option>
-												<option value="Richmond, VA">Richmond, VA</option>
-												<option value="Dallas, TX">Dallas-Fort Worth, TX</option>
-												<option value="Houston, TX">Houston, TX</option>
-												<option value="San Antonio, TX">San Antonio, TX</option>
-												<option value="Austin, TX">Austin, TX</option>
-												<option value="Oklahoma City, OK">Oklahoma City, OK</option>
-												<option value="Tulsa, OK">Tulsa, OK</option>
-												<option value="New Orleans, LA">New Orleans, LA</option>
-												<option value="Little Rock, AR">Little Rock, AR</option>
-												<option value="Los Angeles, CA">Los Angeles / Long Beach, CA</option>
-												<option value="Inland Empire, CA">Inland Empire (Ontario/Fontana), CA</option>
-												<option value="Stockton, CA">Stockton, CA</option>
-												<option value="San Francisco, CA">San Francisco, CA</option>
-												<option value="Phoenix, AZ">Phoenix, AZ</option>
-												<option value="Las Vegas, NV">Las Vegas, NV</option>
-												<option value="Salt Lake City, UT">Salt Lake City, UT</option>
-												<option value="Denver, CO">Denver, CO</option>
-												<option value="Albuquerque, NM">Albuquerque, NM</option>
-												<option value="Seattle, WA">Seattle, WA</option>
-												<option value="Portland, OR">Portland, OR</option>
-												<option value="Boise, ID">Boise, ID</option>
-												<option value="Spokane, WA">Spokane, WA</option>
-											</select>
-										</div>
-										<div class="field half">
-											<label for="master-miles">Total Trip Miles:</label>
-											<input type="number" id="master-miles" placeholder="e.g. 850" oninput="calculateMasterProfit()" />
-										</div>
-										<div class="field half">
-											<label for="master-gross">Gross Load Pay ($):</label>
-											<input type="number" id="master-gross" placeholder="e.g. 2800" oninput="calculateMasterProfit()" />
-										</div>
-									</div>
+        const data = await res.json();
+        if (!data.features || data.features.length === 0) {
+            throw new Error('Could not find coordinates for ' + cityName);
+        }
 
-									<!-- Full Expense & Net Display with Toggle/Minus Buttons -->
-									<div style="margin-top: 20px; background: rgba(0, 0, 0, 0.4); padding: 18px; border-radius: 6px; font-size: 0.9em;">
-										<h4 style="margin-bottom: 10px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px;">Itemized Expense Breakdown (Click [-] to toggle/exclude)</h4>
-										
-										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-											<span><button type="button" class="toggle-btn" id="btn-fuel" onclick="toggleExpense('fuel')">[-]</button> Fuel & DEF (~$0.65/mi):</span> 
-											<strong id="br-fuel" style="color:#FF5722;">$0.00</strong>
-										</div>
-										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-											<span><button type="button" class="toggle-btn" id="btn-maint" onclick="toggleExpense('maint')">[-]</button> Maintenance & Tires (~$0.20/mi):</span> 
-											<strong id="br-maint" style="color:#FF5722;">$0.00</strong>
-										</div>
-										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-											<span><button type="button" class="toggle-btn" id="btn-overhead" onclick="toggleExpense('overhead')">[-]</button> Fixed Overhead (~$0.32/mi):</span> 
-											<strong id="br-overhead" style="color:#FF5722;">$0.00</strong>
-										</div>
-										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-											<span><button type="button" class="toggle-btn" id="btn-tolls" onclick="toggleExpense('tolls')">[-]</button> Tolls, Scales & Misc (~$0.08/mi):</span> 
-											<strong id="br-tolls" style="color:#FF5722;">$0.00</strong>
-										</div>
-										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-											<span><button type="button" class="toggle-btn" id="btn-meals" onclick="toggleExpense('meals')">[-]</button> Driver Meals & Per Diem (~$0.07/mi):</span> 
-											<strong id="br-meals" style="color:#FF5722;">$0.00</strong>
-										</div>
-										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-											<span><button type="button" class="toggle-btn" id="btn-fees" onclick="toggleExpense('fees')">[-]</button> Dispatch (5%) & Factoring (2%):</span> 
-											<strong id="br-fees" style="color:#FF5722;">$0.00</strong>
-										</div>
-										
-										<hr style="border-color: rgba(255,255,255,0.2); margin: 10px 0;" />
-										
-										<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Total Estimated Expenses:</span> <strong id="master-total-exp" style="color:#FF5722;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 1.15em;"><span>Estimated Net Profit:</span> <strong id="master-net-profit" style="color:#4CAF50;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; font-size: 1.1em;"><span>Net Profit Per Mile:</span> <strong id="master-net-pm" style="color:#2196F3;">$0.00 / mi</strong></div>
+        const coords = data.features[0].geometry.coordinates; // [lon, lat]
+        geoCache[cityName] = coords;
+        return coords;
+    }
 
-										<!-- TRANSPARENCY NOTE -->
-										<div style="font-size: 0.75em; opacity: 0.75; margin-top: 15px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px; line-height: 1.4;">
-											<strong>NOTE:</strong><br>
-											• <strong>Fuel & DEF:</strong> On-highway diesel fuel consumption & Diesel Exhaust Fluid.<br>
-											• <strong>Maintenance & Tires:</strong> Routine oil changes, tire wear, brake pads & preventative service reserves.<br>
-											• <strong>Fixed Overhead:</strong> Pro-rated commercial truck insurance, truck/trailer financing & permits.<br>
-											• <strong>Tolls, Scales & Misc:</strong> Turnpike/bridge tolls, CAT scale weigh-ins & cargo securement tools.<br>
-											• <strong>Driver Meals & Per Diem:</strong> On-the-road food, shower/parking credits & daily living costs.<br>
-											• <strong>Dispatch & Factoring Fees:</strong> ProfitPilot 5% dispatch commission and standard 2% invoice factoring fee.
-										</div>
-									</div>
-								</div>
-							</article>
+    // ============================================================
+    // DISTANCE: Two Cities -> Miles (via OpenRouteService)
+    // ============================================================
+    async function getDrivingMiles(fromCity, toCity) {
+        const [fromCoords, toCoords] = await Promise.all([
+            geocodeCity(fromCity),
+            geocodeCity(toCity)
+        ]);
 
-						<!-- Fuel Hubs -->
-							<article id="fuel">
-								<h2 class="major">US Freight Hubs & Diesel Rates</h2>
-								<p>Track regional diesel benchmarks and check local market rates across all major US freight hubs.</p>
-								
-								<div class="fields">
-									<div class="field">
-										<label>Select Hub / Region / City</label>
-										<select id="modal-hub-select" onchange="updateModalHub()">
-											<option value="">-- Choose Hub / City --</option>
-											<option value="3.85|0.59|Stable">Chicago, IL (Midwest Hub)</option>
-											<option value="3.90|0.60|Stable">Indianapolis, IN</option>
-											<option value="3.88|0.60|Stable">Detroit, MI</option>
-											<option value="3.88|0.60|Stable">Columbus, OH</option>
-											<option value="3.86|0.59|Stable">Cincinnati, OH</option>
-											<option value="3.82|0.59|Down">St. Louis, MO</option>
-											<option value="3.80|0.58|Down">Kansas City, MO</option>
-											<option value="3.94|0.61|Up">Minneapolis, MN</option>
-											<option value="3.89|0.60|Stable">Milwaukee, WI</option>
-											<option value="3.87|0.60|Stable">Grand Rapids, MI</option>
-											<option value="4.12|0.63|Up">New York, NY</option>
-											<option value="4.02|0.62|Stable">Philadelphia, PA</option>
-											<option value="3.95|0.61|Stable">Harrisburg, PA</option>
-											<option value="3.98|0.61|Stable">Pittsburgh, PA</option>
-											<option value="4.05|0.62|Up">Newark, NJ</option>
-											<option value="4.15|0.64|Up">Boston, MA</option>
-											<option value="3.97|0.61|Stable">Buffalo, NY</option>
-											<option value="3.99|0.61|Stable">Baltimore, MD</option>
-											<option value="3.70|0.57|Up">Atlanta, GA (Southeast Hub)</option>
-											<option value="3.92|0.60|Up">Charlotte, NC</option>
-											<option value="3.75|0.58|Stable">Memphis, TN</option>
-											<option value="3.89|0.60|Stable">Nashville, TN</option>
-											<option value="3.78|0.58|Stable">Jacksonville, FL</option>
-											<option value="3.95|0.61|Up">Miami, FL</option>
-											<option value="3.77|0.58|Stable">Savannah, GA</option>
-											<option value="3.72|0.57|Stable">Birmingham, AL</option>
-											<option value="3.84|0.59|Stable">Louisville, KY</option>
-											<option value="3.91|0.60|Stable">Richmond, VA</option>
-											<option value="3.55|0.55|Down">Dallas-Fort Worth, TX</option>
-											<option value="3.52|0.54|Down">Houston, TX</option>
-											<option value="3.54|0.54|Down">San Antonio, TX</option>
-											<option value="3.53|0.54|Down">Austin, TX</option>
-											<option value="3.65|0.56|Stable">Oklahoma City, OK</option>
-											<option value="3.63|0.56|Stable">Tulsa, OK</option>
-											<option value="3.68|0.57|Stable">New Orleans, LA</option>
-											<option value="3.66|0.56|Stable">Little Rock, AR</option>
-											<option value="4.65|0.72|Up">Los Angeles / Long Beach, CA</option>
-											<option value="4.62|0.71|Up">Inland Empire (Ontario/Fontana), CA</option>
-											<option value="4.50|0.69|Up">Stockton, CA</option>
-											<option value="4.68|0.72|Up">San Francisco, CA</option>
-											<option value="4.10|0.63|Up">Phoenix, AZ</option>
-											<option value="4.25|0.65|Up">Las Vegas, NV</option>
-											<option value="3.98|0.61|Stable">Salt Lake City, UT</option>
-											<option value="3.96|0.61|Up">Denver, CO</option>
-											<option value="3.85|0.59|Stable">Albuquerque, NM</option>
-											<option value="4.55|0.70|Up">Seattle, WA</option>
-											<option value="4.48|0.69|Up">Portland, OR</option>
-											<option value="4.05|0.62|Stable">Boise, ID</option>
-											<option value="4.50|0.69|Up">Spokane, WA</option>
-										</select>
-									</div>
-								</div>
-								
-								<div id="modal-hub-result" style="display:none; background:rgba(255,255,255,0.05); padding:15px; border-radius:8px; margin-top:15px; text-align:center;">
-									<p style="margin-bottom:5px;">Average Diesel Price: <strong id="m-price" style="color:#4CAF50;">$0.00</strong></p>
-									<p style="margin-bottom:5px;">Estimated Cost Per Mile (6.5 MPG): <strong id="m-fcpm" style="color:#2196F3;">$0.00</strong></p>
-									<p style="margin-bottom:0;">Market Trend: <strong id="m-trend">-</strong></p>
-								</div>
-							</article>
+        // OpenRouteService expects [lon, lat] pairs
+        const body = {
+            coordinates: [fromCoords, toCoords]
+        };
 
-						<!-- About -->
-							<article id="about">
-								<h2 class="major">Why Choose Us</h2>
-								<p><strong>Your Load. Your Profit. Our Priority.</strong></p>
-								<p>We pride ourselves on full transparency, clear communication, and dedicated support. Unlike large call-center dispatchers, we provide personalized attention to every carrier we partner with.</p>
-								<h3>Equipment Types We Dispatch:</h3>
-								<ul>
-									<li>Dry Van (53')</li>
-									<li>Reefer</li>
-									<li>Flatbed & Step Deck</li>
-									<li>Power Only & Box Trucks</li>
-								</ul>
-							</article>
+        const res = await fetch('https://api.openrouteservice.org/v2/directions/driving-hgv', {
+            method: 'POST',
+            headers: {
+                'Authorization': ORS_API_KEY,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
 
-						<!-- Onboarding -->
-							<article id="onboarding">
-								<h2 class="major">Carrier Onboarding</h2>
-								<p>Have your active MC/DOT authority, W-9, and Certificate of Insurance (COI) ready to start getting dispatched today.</p>
-							</article>
+        if (!res.ok) {
+            const errText = await res.text();
+            console.error('ORS Directions error:', errText);
+            throw new Error('Routing failed. Check API key and coordinates.');
+        }
 
-						<!-- FAQ -->
-							<article id="faq">
-								<h2 class="major">Frequently Asked Questions</h2>
-								<h4>Do you force dispatch?</h4>
-								<p>Never. You maintain 100% control over your routes and loads.</p>
-							</article>
+        const data = await res.json();
+        // Distance is returned in meters; convert to miles
+        const meters = data.routes[0].summary.distance;
+        const miles = meters * 0.000621371;
+        return Math.round(miles);
+    }
 
-						<!-- Contact -->
-							<article id="contact">
-								<h2 class="major">Get Dispatched</h2>
-								<p>Ready to boost your profitability? Send us a message or request a callback.</p>
-								<form method="post" action="https://formspree.io/f/xppqkqrb">
-									<div class="fields">
-										<div class="field half">
-											<label for="name">Name / Fleet Name</label>
-											<input type="text" name="name" id="name" required />
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="email" name="email" id="email" required />
-										</div>
-										<div class="field">
-											<label for="equipment">Equipment Type & MC Number</label>
-											<input type="text" name="equipment" id="equipment" placeholder="e.g., Dry Van / MC# 123456" />
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="4"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Reset" /></li>
-									</ul>
-								</form>
-								<ul class="icons">
-									<li><a href="https://facebook.com/profitpilotlogistics" class="icon brands fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
-									<li><a href="https://instagram.com/profitpilotlogistics" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-									<li><a href="https://youtube.com/@profitpilotlogistics" class="icon brands fa-youtube" target="_blank"><span class="label">YouTube</span></a></li>
-									<li><a href="https://tiktok.com/@profitpilotlogistics" class="icon brands fa-tiktok" target="_blank"><span class="label">TikTok</span></a></li>
-									<li><a href="https://x.com/profitpilotlog" class="icon brands fa-twitter" target="_blank"><span class="label">X</span></a></li>
-								</ul>
-								<p style="text-align: center; margin-top: 10px;"><strong>Email:</strong> <a href="mailto:dispatch@profitpilotlogistics.com">dispatch@profitpilotlogistics.com</a></p>
-							</article>
+    // ============================================================
+    // UNIFIED CALCULATOR (replaces both quickCalc and calculateMasterProfit)
+    // ============================================================
+    function computeNet(gross, miles, expensesObj) {
+        const fuel = expensesObj.fuel ? miles * EXPENSE_RATES.fuel : 0;
+        const maint = expensesObj.maint ? miles * EXPENSE_RATES.maint : 0;
+        const overhead = expensesObj.overhead ? miles * EXPENSE_RATES.overhead : 0;
+        const tolls = expensesObj.tolls ? miles * EXPENSE_RATES.tolls : 0;
+        const meals = expensesObj.meals ? miles * EXPENSE_RATES.meals : 0;
+        const fees = expensesObj.fees ? gross * FEE_RATE : 0;
 
-					</div>
+        const totalExp = fuel + maint + overhead + tolls + meals + fees;
+        const net = gross - totalExp;
+        const netPerMile = miles > 0 ? net / miles : 0;
 
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; ProfitPilot Logistics. <em>Your Load. Your Profit. Our Priority.</em></p>
-					</footer>
+        return { fuel, maint, overhead, tolls, meals, fees, totalExp, net, netPerMile };
+    }
 
-			</div>
+    // ============================================================
+    // UI: Quick Estimator (home page)
+    // ============================================================
+    function quickCalc() {
+        const miles = parseFloat(document.getElementById('quick-miles').value) || 0;
+        const gross = parseFloat(document.getElementById('quick-gross').value) || 0;
 
-		<!-- BG -->
-			<div id="bg"></div>
+        if (miles > 0 && gross > 0) {
+            // Use ALL expenses enabled for the quick estimate
+            const result = computeNet(gross, miles, {
+                fuel: true, maint: true, overhead: true, tolls: true, meals: true, fees: true
+            });
+            const el = document.getElementById('quick-net');
+            el.innerText = '$' + result.net.toFixed(2);
+            el.style.color = result.net < 0 ? '#FF5722' : '#4CAF50';
+        } else {
+            document.getElementById('quick-net').innerText = '$0.00';
+            document.getElementById('quick-net').style.color = '#4CAF50';
+        }
+    }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script>
-				// Comprehensive accurate distance matrix for major US shipping corridors
-				const distanceMatrix = {
-					"Chicago, IL-Atlanta, GA": 700, "Atlanta, GA-Chicago, IL": 700,
-					"Chicago, IL-Dallas, TX": 950, "Dallas, TX-Chicago, IL": 950,
-					"Dallas, TX-Los Angeles, CA": 1400, "Los Angeles, CA-Dallas, TX": 1400,
-					"Atlanta, GA-Harrisburg, PA": 800, "Harrisburg, PA-Atlanta, GA": 800,
-					"Chicago, IL-Los Angeles, CA": 2100, "Los Angeles, CA-Chicago, IL": 2100,
-					"Atlanta, GA-Dallas, TX": 780, "Dallas, TX-Atlanta, GA": 780,
-					"Chicago, IL-Harrisburg, PA": 600, "Harrisburg, PA-Chicago, IL": 600,
-					"Memphis, TN-Dallas, TX": 450, "Dallas, TN-Memphis, TN": 450,
-					"Chicago, IL-New York, NY": 790, "New York, NY-Chicago, IL": 790,
-					"Atlanta, GA-Miami, FL": 660, "Miami, FL-Atlanta, GA": 660,
-					"Los Angeles, CA-Seattle, WA": 1130, "Seattle, WA-Los Angeles, CA": 1130,
-					"Chicago, IL-Denver, CO": 1000, "Denver, CO-Chicago, IL": 1000,
-					"Chicago, IL-Spokane, WA": 1950, "Spokane, WA-Chicago, IL": 1950,
-					"Dallas, TX-Spokane, WA": 1850, "Spokane, WA-Dallas, TX": 1850,
-					"Atlanta, GA-Seattle, WA": 2350, "Seattle, WA-Atlanta, GA": 2350,
-					"New York, NY-Los Angeles, CA": 2800, "Los Angeles, CA-New York, NY": 2800,
-					"Columbus, OH-Charlotte, NC": 410, "Charlotte, NC-Columbus, OH": 410,
-					"Columbus, OH-Chicago, IL": 350, "Chicago, IL-Columbus, OH": 350,
-					"Atlanta, GA-Charlotte, NC": 245, "Charlotte, NC-Atlanta, GA": 245
-				};
+    // ============================================================
+    // UI: Master Calculator (Calc & Tools tab)
+    // ============================================================
+    async function calculateMasterProfit() {
+        const fromCity = document.getElementById('route-from').value;
+        const toCity = document.getElementById('route-to').value;
+        const milesInput = document.getElementById('master-miles');
+        const gross = parseFloat(document.getElementById('master-gross').value) || 0;
 
-				// Expense inclusion toggles
-				const activeExpenses = {
-					fuel: true,
-					maint: true,
-					overhead: true,
-					tolls: true,
-					meals: true,
-					fees: true
-				};
+        // Auto-fetch miles when both cities are selected
+        if (fromCity && toCity && fromCity !== toCity) {
+            milesInput.value = '...'; // loading indicator
+            milesInput.disabled = true;
+            try {
+                const miles = await getDrivingMiles(fromCity, toCity);
+                milesInput.value = miles;
+            } catch (err) {
+                console.error(err);
+                milesInput.value = '';
+                alert('Could not calculate mileage: ' + err.message);
+            } finally {
+                milesInput.disabled = false;
+            }
+        } else if (fromCity && toCity && fromCity === toCity) {
+            milesInput.value = 0;
+        }
 
-				function toggleExpense(key) {
-					activeExpenses[key] = !activeExpenses[key];
-					const btn = document.getElementById('btn-' + key);
-					if (activeExpenses[key]) {
-						btn.innerText = '[-]';
-						btn.classList.remove('excluded');
-					} else {
-						btn.innerText = '[+]';
-						btn.classList.add('excluded');
-					}
-					calculateMasterProfit();
-				}
+        const miles = parseFloat(milesInput.value) || 0;
 
-				function quickCalc() {
-					const miles = parseFloat(document.getElementById('quick-miles').value) || 0;
-					const gross = parseFloat(document.getElementById('quick-gross').value) || 0;
-					if (miles > 0 && gross > 0) {
-						const exp = (miles * 1.25) + (gross * 0.07);
-						const net = gross - exp;
-						document.getElementById('quick-net').innerText = '$' + net.toFixed(2);
-					} else {
-						document.getElementById('quick-net').innerText = '$0.00';
-					}
-				}
+        // Compute all expenses (respecting toggles)
+        const r = computeNet(gross, miles, activeExpenses);
 
-				function calculateMasterProfit() {
-					const fromCity = document.getElementById('route-from').value;
-					const toCity = document.getElementById('route-to').value;
-					const milesInput = document.getElementById('master-miles');
-					
-					if (fromCity && toCity) {
-						if (fromCity === toCity) {
-							milesInput.value = 100;
-						} else {
-							const key1 = fromCity + "-" + toCity;
-							const key2 = toCity + "-" + fromCity;
-							if (distanceMatrix[key1]) {
-								milesInput.value = distanceMatrix[key1];
-							} else if (distanceMatrix[key2]) {
-								milesInput.value = distanceMatrix[key2];
-							} else {
-								// Leave blank instead of hardcoding a wrong default number so user can input precise miles safely
-								milesInput.value = "";
-							}
-						}
-					}
+        // Update the breakdown display
+        document.getElementById('br-fuel').innerText = '$' + r.fuel.toFixed(2);
+        document.getElementById('br-maint').innerText = '$' + r.maint.toFixed(2);
+        document.getElementById('br-overhead').innerText = '$' + r.overhead.toFixed(2);
+        document.getElementById('br-tolls').innerText = '$' + r.tolls.toFixed(2);
+        document.getElementById('br-meals').innerText = '$' + r.meals.toFixed(2);
+        document.getElementById('br-fees').innerText = '$' + r.fees.toFixed(2);
 
-					const miles = parseFloat(milesInput.value) || 0;
-					const gross = parseFloat(document.getElementById('master-gross').value) || 0;
+        document.getElementById('master-total-exp').innerText = '$' + r.totalExp.toFixed(2);
+        document.getElementById('master-net-profit').innerText = '$' + r.net.toFixed(2);
+        document.getElementById('master-net-pm').innerText = '$' + r.netPerMile.toFixed(2) + ' / mi';
 
-					const fuelCost = activeExpenses.fuel ? (miles * 0.65) : 0;
-					const maintCost = activeExpenses.maint ? (miles * 0.20) : 0;
-					const overheadCost = activeExpenses.overhead ? (miles * 0.32) : 0;
-					const tollsCost = activeExpenses.tolls ? (miles * 0.08) : 0;
-					const mealsCost = activeExpenses.meals ? (miles * 0.07) : 0;
-					const feesCost = activeExpenses.fees ? (gross * 0.07) : 0;
+        // Color-code negative profit
+        const profitEl = document.getElementById('master-net-profit');
+        profitEl.style.color = r.net < 0 ? '#FF5722' : '#4CAF50';
+    }
 
-					if (miles > 0 || gross > 0) {
-						const totalExpenses = fuelCost + maintCost + overheadCost + tollsCost + mealsCost + feesCost;
-						const netProfit = gross - totalExpenses;
-						const netPerMile = miles > 0 ? (netProfit / miles) : 0;
+    // ============================================================
+    // UI: Expense Toggle Buttons
+    // ============================================================
+    function toggleExpense(key) {
+        activeExpenses[key] = !activeExpenses[key];
+        const btn = document.getElementById('btn-' + key);
+        if (activeExpenses[key]) {
+            btn.innerText = '[-]';
+            btn.classList.remove('excluded');
+        } else {
+            btn.innerText = '[+]';
+            btn.classList.add('excluded');
+        }
+        calculateMasterProfit();
+    }
 
-						document.getElementById('br-fuel').innerText = '$' + fuelCost.toFixed(2);
-						document.getElementById('br-maint').innerText = '$' + maintCost.toFixed(2);
-						document.getElementById('br-overhead').innerText = '$' + overheadCost.toFixed(2);
-						document.getElementById('br-tolls').innerText = '$' + tollsCost.toFixed(2);
-						document.getElementById('br-meals').innerText = '$' + mealsCost.toFixed(2);
-						document.getElementById('br-fees').innerText = '$' + feesCost.toFixed(2);
-
-						document.getElementById('master-total-exp').innerText = '$' + totalExpenses.toFixed(2);
-						document.getElementById('master-net-profit').innerText = '$' + netProfit.toFixed(2);
-						document.getElementById('master-net-pm').innerText = '$' + netPerMile.toFixed(2) + ' / mi';
-					} else {
-						document.getElementById('br-fuel').innerText = '$0.00';
-						document.getElementById('br-maint').innerText = '$0.00';
-						document.getElementById('br-overhead').innerText = '$0.00';
-						document.getElementById('br-tolls').innerText = '$0.00';
-						document.getElementById('br-meals').innerText = '$0.00';
-						document.getElementById('br-fees').innerText = '$0.00';
-						document.getElementById('master-total-exp').innerText = '$0.00';
-						document.getElementById('master-net-profit').innerText = '$0.00';
-						document.getElementById('master-net-pm').innerText = '$0.00 / mi';
-					}
-				}
-
-				function updateModalHub() {
-					const val = document.getElementById('modal-hub-select').value;
-					const resDiv = document.getElementById('modal-hub-result');
-					if (!val) { resDiv.style.display = 'none'; return; }
-					const parts = val.split('|');
-					document.getElementById('m-price').innerText = '$' + parts[0];
-					document.getElementById('m-fcpm').innerText = '$' + parts[1] + ' / mi';
-					document.getElementById('m-trend').innerText = parts[2];
-					resDiv.style.display = 'block';
-				}
-			</script>
-	</body>
-</html>
+    // ============================================================
+    // UI: Fuel Hubs Modal (unchanged from your original)
+    // ============================================================
+    function updateModalHub() {
+        const val = document.getElementById('modal-hub-select').value;
+        const resDiv = document.getElementById('modal-hub-result');
+        if (!val) { resDiv.style.display = 'none'; return; }
+        const parts = val.split('|');
+        document.getElementById('m-price').innerText = '$' + parts[0];
+        document.getElementById('m-fcpm').innerText = '$' + parts[1] + ' / mi';
+        document.getElementById('m-trend').innerText = parts[2];
+        resDiv.style.display = 'block';
+    }
+</script>
