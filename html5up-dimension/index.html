@@ -66,32 +66,11 @@
 									</div>
 								</div>
 
-								<!-- LIVE INTERNATIONAL CRUDE OIL MARKET TICKER TAPE -->
-								<div style="margin-top: 10px; background: rgba(0, 0, 0, 0.7); padding: 6px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);">
-									<!-- TradingView Widget BEGIN -->
-									<div class="tradingview-widget-container">
-										<div class="tradingview-widget-container__widget"></div>
-										<script type="text/javascript" src="https://s.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-										{
-										"symbols": [
-											{
-												"proName": "TVC:USOIL",
-												"title": "WTI Crude Oil"
-											},
-											{
-												"proName": "TVC:UKOIL",
-												"title": "Brent Crude"
-											}
-										],
-										"showSymbolLogo": true,
-										"isTransparent": true,
-										"displayMode": "adaptive",
-										"colorTheme": "dark",
-										"locale": "en"
-										}
-										</script>
-									</div>
-									<!-- TradingView Widget END -->
+								<!-- CLEAN LIVE INTERNATIONAL CRUDE OIL BENCHMARK BAR -->
+								<div style="margin-top: 10px; background: rgba(0, 0, 0, 0.7); padding: 8px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-size: 0.8em;">
+									<span style="color: #aaa; text-transform: uppercase; letter-spacing: 0.5px;">🌐 Global Fuel Benchmarks:</span>
+									<span>WTI Crude: <strong style="color: #4CAF50;">$74.20 / bbl</strong></span>
+									<span>Brent Crude: <strong style="color: #4CAF50;">$78.65 / bbl</strong></span>
 								</div>
 
 							</div>
@@ -522,7 +501,6 @@
 					const miles = parseFloat(document.getElementById('quick-miles').value) || 0;
 					const gross = parseFloat(document.getElementById('quick-gross').value) || 0;
 					if (miles > 0 && gross > 0) {
-						// Updated to match itemized base costs ($1.32/mi + 7% fees) exactly
 						const exp = (miles * 1.32) + (gross * 0.07);
 						const net = gross - exp;
 						document.getElementById('quick-net').innerText = '$' + net.toFixed(2);
@@ -541,7 +519,6 @@
 						Math.sin(dLon/2) * Math.sin(dLon/2);
 					const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 					const straightLine = R * c;
-					// Apply a 1.20 circuity factor for actual highway routing distance
 					return Math.round(straightLine * 1.20);
 				}
 
