@@ -10,6 +10,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* Fix input text visibility inside dark modals */
+			input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="search"], input[type="url"], input[type="number"], select, textarea {
+				background: rgba(0, 0, 0, 0.85) !important;
+				color: #ffffff !important;
+				border: 1px solid rgba(255, 255, 255, 0.3) !important;
+			}
+			input::placeholder, textarea::placeholder {
+				color: #aaaaaa !important;
+			}
+			select option {
+				background: #1a1a1a !important;
+				color: #ffffff !important;
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
@@ -27,11 +42,11 @@
 								<p>Reliable freight dispatching and back-office support tailored for independent owner-operators and fleets.</p>
 								
 								<!-- COMPACT HOME PAGE QUICK RATE CHECKER -->
-								<div style="background: rgba(0, 0, 0, 0.65); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); margin-top: 15px; text-align: left;">
+								<div style="background: rgba(0, 0, 0, 0.75); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.25); margin-top: 15px; text-align: left;">
 									<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
 										<span style="font-size: 0.85em; font-weight: bold; color: #fff;">⚡ Quick Estimator:</span>
-										<input type="number" id="quick-miles" placeholder="Miles" oninput="quickCalc()" style="background:#222; color:#fff; border:1px solid #444; padding:4px 8px; font-size:0.8em; width:80px;" />
-										<input type="number" id="quick-gross" placeholder="Gross Pay ($)" oninput="quickCalc()" style="background:#222; color:#fff; border:1px solid #444; padding:4px 8px; font-size:0.8em; width:110px;" />
+										<input type="number" id="quick-miles" placeholder="Miles" oninput="quickCalc()" style="width:80px; padding:4px 8px; font-size:0.8em;" />
+										<input type="number" id="quick-gross" placeholder="Gross Pay ($)" oninput="quickCalc()" style="width:110px; padding:4px 8px; font-size:0.8em;" />
 										<span style="font-size: 0.85em;">Est. Net: <strong id="quick-net" style="color:#4CAF50;">$0.00</strong></span>
 									</div>
 								</div>
@@ -81,34 +96,130 @@
 						<!-- Calc & Tools -->
 							<article id="calc">
 								<h2 class="major">Real-World Trip Profitability Calculator</h2>
-								<p>Select your lane or enter miles & gross pay to calculate true net earnings after all operating costs.</p>
+								<p>Select your lane across any US freight hub or enter custom miles & gross pay to calculate true net earnings.</p>
 
 								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
 									<div class="fields">
 										<div class="field half">
 											<label for="route-from">Origin (From):</label>
-											<select id="route-from" onchange="calculateMasterProfit()" style="background: #222; color: #fff;">
-												<option value="">-- Select Origin --</option>
-												<option value="Chicago, IL">Chicago, IL</option>
-												<option value="Atlanta, GA">Atlanta, GA</option>
-												<option value="Dallas, TX">Dallas, TX</option>
-												<option value="Los Angeles, CA">Los Angeles, CA</option>
-												<option value="Harrisburg, PA">Harrisburg, PA</option>
+											<select id="route-from" onchange="calculateMasterProfit()">
+												<option value="">-- Select Origin Hub --</option>
+												<!-- Midwest -->
+												<option value="Chicago, IL">Chicago, IL (Midwest Hub)</option>
 												<option value="Indianapolis, IN">Indianapolis, IN</option>
+												<option value="Detroit, MI">Detroit, MI</option>
+												<option value="Columbus, OH">Columbus, OH</option>
+												<option value="Cincinnati, OH">Cincinnati, OH</option>
+												<option value="St. Louis, MO">St. Louis, MO</option>
+												<option value="Kansas City, MO">Kansas City, MO</option>
+												<option value="Minneapolis, MN">Minneapolis, MN</option>
+												<option value="Milwaukee, WI">Milwaukee, WI</option>
+												<option value="Grand Rapids, MI">Grand Rapids, MI</option>
+												<!-- Northeast -->
+												<option value="New York, NY">New York, NY</option>
+												<option value="Philadelphia, PA">Philadelphia, PA</option>
+												<option value="Harrisburg, PA">Harrisburg, PA</option>
+												<option value="Pittsburgh, PA">Pittsburgh, PA</option>
+												<option value="Newark, NJ">Newark, NJ</option>
+												<option value="Boston, MA">Boston, MA</option>
+												<option value="Buffalo, NY">Buffalo, NY</option>
+												<option value="Baltimore, MD">Baltimore, MD</option>
+												<!-- Southeast -->
+												<option value="Atlanta, GA">Atlanta, GA (Southeast Hub)</option>
+												<option value="Charlotte, NC">Charlotte, NC</option>
 												<option value="Memphis, TN">Memphis, TN</option>
+												<option value="Nashville, TN">Nashville, TN</option>
+												<option value="Jacksonville, FL">Jacksonville, FL</option>
+												<option value="Miami, FL">Miami, FL</option>
+												<option value="Savannah, GA">Savannah, GA</option>
+												<option value="Birmingham, AL">Birmingham, AL</option>
+												<option value="Louisville, KY">Louisville, KY</option>
+												<option value="Richmond, VA">Richmond, VA</option>
+												<!-- South / Gulf Coast -->
+												<option value="Dallas, TX">Dallas-Fort Worth, TX</option>
+												<option value="Houston, TX">Houston, TX</option>
+												<option value="San Antonio, TX">San Antonio, TX</option>
+												<option value="Austin, TX">Austin, TX</option>
+												<option value="Oklahoma City, OK">Oklahoma City, OK</option>
+												<option value="Tulsa, OK">Tulsa, OK</option>
+												<option value="New Orleans, LA">New Orleans, LA</option>
+												<option value="Little Rock, AR">Little Rock, AR</option>
+												<!-- West Coast & Southwest -->
+												<option value="Los Angeles, CA">Los Angeles / Long Beach, CA</option>
+												<option value="Inland Empire, CA">Inland Empire (Ontario/Fontana), CA</option>
+												<option value="Stockton, CA">Stockton, CA</option>
+												<option value="San Francisco, CA">San Francisco, CA</option>
+												<option value="Phoenix, AZ">Phoenix, AZ</option>
+												<option value="Las Vegas, NV">Las Vegas, NV</option>
+												<option value="Salt Lake City, UT">Salt Lake City, UT</option>
+												<option value="Denver, CO">Denver, CO</option>
+												<option value="Albuquerque, NM">Albuquerque, NM</option>
+												<!-- Northwest -->
+												<option value="Seattle, WA">Seattle, WA</option>
+												<option value="Portland, OR">Portland, OR</option>
+												<option value="Boise, ID">Boise, ID</option>
+												<option value="Spokane, WA">Spokane, WA</option>
 											</select>
 										</div>
 										<div class="field half">
 											<label for="route-to">Destination (To):</label>
-											<select id="route-to" onchange="calculateMasterProfit()" style="background: #222; color: #fff;">
-												<option value="">-- Select Destination --</option>
-												<option value="Chicago, IL">Chicago, IL</option>
-												<option value="Atlanta, GA">Atlanta, GA</option>
-												<option value="Dallas, TX">Dallas, TX</option>
-												<option value="Los Angeles, CA">Los Angeles, CA</option>
-												<option value="Harrisburg, PA">Harrisburg, PA</option>
+											<select id="route-to" onchange="calculateMasterProfit()">
+												<option value="">-- Select Destination Hub --</option>
+												<!-- Midwest -->
+												<option value="Chicago, IL">Chicago, IL (Midwest Hub)</option>
 												<option value="Indianapolis, IN">Indianapolis, IN</option>
+												<option value="Detroit, MI">Detroit, MI</option>
+												<option value="Columbus, OH">Columbus, OH</option>
+												<option value="Cincinnati, OH">Cincinnati, OH</option>
+												<option value="St. Louis, MO">St. Louis, MO</option>
+												<option value="Kansas City, MO">Kansas City, MO</option>
+												<option value="Minneapolis, MN">Minneapolis, MN</option>
+												<option value="Milwaukee, WI">Milwaukee, WI</option>
+												<option value="Grand Rapids, MI">Grand Rapids, MI</option>
+												<!-- Northeast -->
+												<option value="New York, NY">New York, NY</option>
+												<option value="Philadelphia, PA">Philadelphia, PA</option>
+												<option value="Harrisburg, PA">Harrisburg, PA</option>
+												<option value="Pittsburgh, PA">Pittsburgh, PA</option>
+												<option value="Newark, NJ">Newark, NJ</option>
+												<option value="Boston, MA">Boston, MA</option>
+												<option value="Buffalo, NY">Buffalo, NY</option>
+												<option value="Baltimore, MD">Baltimore, MD</option>
+												<!-- Southeast -->
+												<option value="Atlanta, GA">Atlanta, GA (Southeast Hub)</option>
+												<option value="Charlotte, NC">Charlotte, NC</option>
 												<option value="Memphis, TN">Memphis, TN</option>
+												<option value="Nashville, TN">Nashville, TN</option>
+												<option value="Jacksonville, FL">Jacksonville, FL</option>
+												<option value="Miami, FL">Miami, FL</option>
+												<option value="Savannah, GA">Savannah, GA</option>
+												<option value="Birmingham, AL">Birmingham, AL</option>
+												<option value="Louisville, KY">Louisville, KY</option>
+												<option value="Richmond, VA">Richmond, VA</option>
+												<!-- South / Gulf Coast -->
+												<option value="Dallas, TX">Dallas-Fort Worth, TX</option>
+												<option value="Houston, TX">Houston, TX</option>
+												<option value="San Antonio, TX">San Antonio, TX</option>
+												<option value="Austin, TX">Austin, TX</option>
+												<option value="Oklahoma City, OK">Oklahoma City, OK</option>
+												<option value="Tulsa, OK">Tulsa, OK</option>
+												<option value="New Orleans, LA">New Orleans, LA</option>
+												<option value="Little Rock, AR">Little Rock, AR</option>
+												<!-- West Coast & Southwest -->
+												<option value="Los Angeles, CA">Los Angeles / Long Beach, CA</option>
+												<option value="Inland Empire, CA">Inland Empire (Ontario/Fontana), CA</option>
+												<option value="Stockton, CA">Stockton, CA</option>
+												<option value="San Francisco, CA">San Francisco, CA</option>
+												<option value="Phoenix, AZ">Phoenix, AZ</option>
+												<option value="Las Vegas, NV">Las Vegas, NV</option>
+												<option value="Salt Lake City, UT">Salt Lake City, UT</option>
+												<option value="Denver, CO">Denver, CO</option>
+												<option value="Albuquerque, NM">Albuquerque, NM</option>
+												<!-- Northwest -->
+												<option value="Seattle, WA">Seattle, WA</option>
+												<option value="Portland, OR">Portland, OR</option>
+												<option value="Boise, ID">Boise, ID</option>
+												<option value="Spokane, WA">Spokane, WA</option>
 											</select>
 										</div>
 										<div class="field half">
@@ -142,33 +253,68 @@
 						<!-- Fuel Hubs -->
 							<article id="fuel">
 								<h2 class="major">US Freight Hubs & Diesel Rates</h2>
-								<p>Track regional diesel benchmarks across major US dispatch corridors.</p>
+								<p>Track regional diesel benchmarks and check local market rates across all major US freight hubs.</p>
 								
 								<div class="fields">
 									<div class="field">
-										<label>Select Hub / Region</label>
-										<select id="modal-hub-select" onchange="updateModalHub()" style="background:#222; color:#fff;">
+										<label>Select Hub / Region / City</label>
+										<select id="modal-hub-select" onchange="updateModalHub()">
 											<option value="">-- Choose Hub / City --</option>
-											<option value="3.85|0.59|Stable">Chicago, IL (Midwest)</option>
-											<option value="3.55|0.55|Down">Dallas, TX (Gulf Coast)</option>
-											<option value="3.70|0.57|Up">Atlanta, GA (Southeast)</option>
-											<option value="3.95|0.61|Stable">Harrisburg, PA (Northeast)</option>
-											<option value="4.65|0.72|Up">Los Angeles, CA (West Coast)</option>
+											<!-- Midwest -->
+											<option value="3.85|0.59|Stable">Chicago, IL (Midwest Hub)</option>
 											<option value="3.90|0.60|Stable">Indianapolis, IN</option>
-											<option value="3.82|0.59|Down">Houston, TX</option>
-											<option value="3.75|0.58|Stable">Memphis, TN</option>
-											<option value="4.05|0.62|Up">Elizabeth, NJ</option>
-											<option value="4.55|0.70|Up">Seattle, WA</option>
+											<option value="3.88|0.60|Stable">Detroit, MI</option>
 											<option value="3.88|0.60|Stable">Columbus, OH</option>
+											<option value="3.86|0.59|Stable">Cincinnati, OH</option>
+											<option value="3.82|0.59|Down">St. Louis, MO</option>
 											<option value="3.80|0.58|Down">Kansas City, MO</option>
+											<option value="3.94|0.61|Up">Minneapolis, MN</option>
+											<option value="3.89|0.60|Stable">Milwaukee, WI</option>
+											<option value="3.87|0.60|Stable">Grand Rapids, MI</option>
+											<!-- Northeast -->
+											<option value="4.12|0.63|Up">New York, NY</option>
+											<option value="4.02|0.62|Stable">Philadelphia, PA</option>
+											<option value="3.95|0.61|Stable">Harrisburg, PA</option>
+											<option value="3.98|0.61|Stable">Pittsburgh, PA</option>
+											<option value="4.05|0.62|Up">Newark, NJ</option>
+											<option value="4.15|0.64|Up">Boston, MA</option>
+											<option value="3.97|0.61|Stable">Buffalo, NY</option>
+											<option value="3.99|0.61|Stable">Baltimore, MD</option>
+											<!-- Southeast -->
+											<option value="3.70|0.57|Up">Atlanta, GA (Southeast Hub)</option>
 											<option value="3.92|0.60|Up">Charlotte, NC</option>
-											<option value="3.78|0.58|Stable">Jacksonville, FL</option>
-											<option value="4.50|0.69|Up">Stockton, CA</option>
-											<option value="3.84|0.59|Stable">Louisville, KY</option>
+											<option value="3.75|0.58|Stable">Memphis, TN</option>
 											<option value="3.89|0.60|Stable">Nashville, TN</option>
-											<option value="3.96|0.61|Up">Denver, CO</option>
-											<option value="3.76|0.58|Down">Oklahoma City, OK</option>
+											<option value="3.78|0.58|Stable">Jacksonville, FL</option>
+											<option value="3.95|0.61|Up">Miami, FL</option>
+											<option value="3.77|0.58|Stable">Savannah, GA</option>
+											<option value="3.72|0.57|Stable">Birmingham, AL</option>
+											<option value="3.84|0.59|Stable">Louisville, KY</option>
+											<option value="3.91|0.60|Stable">Richmond, VA</option>
+											<!-- South / Gulf Coast -->
+											<option value="3.55|0.55|Down">Dallas-Fort Worth, TX</option>
+											<option value="3.52|0.54|Down">Houston, TX</option>
+											<option value="3.54|0.54|Down">San Antonio, TX</option>
+											<option value="3.53|0.54|Down">Austin, TX</option>
+											<option value="3.65|0.56|Stable">Oklahoma City, OK</option>
+											<option value="3.63|0.56|Stable">Tulsa, OK</option>
+											<option value="3.68|0.57|Stable">New Orleans, LA</option>
+											<option value="3.66|0.56|Stable">Little Rock, AR</option>
+											<!-- West Coast & Southwest -->
+											<option value="4.65|0.72|Up">Los Angeles / Long Beach, CA</option>
+											<option value="4.62|0.71|Up">Inland Empire (Ontario/Fontana), CA</option>
+											<option value="4.50|0.69|Up">Stockton, CA</option>
+											<option value="4.68|0.72|Up">San Francisco, CA</option>
 											<option value="4.10|0.63|Up">Phoenix, AZ</option>
+											<option value="4.25|0.65|Up">Las Vegas, NV</option>
+											<option value="3.98|0.61|Stable">Salt Lake City, UT</option>
+											<option value="3.96|0.61|Up">Denver, CO</option>
+											<option value="3.85|0.59|Stable">Albuquerque, NM</option>
+											<!-- Northwest -->
+											<option value="4.55|0.70|Up">Seattle, WA</option>
+											<option value="4.48|0.69|Up">Portland, OR</option>
+											<option value="4.05|0.62|Stable">Boise, ID</option>
+											<option value="4.50|0.69|Up">Spokane, WA</option>
 										</select>
 									</div>
 								</div>
@@ -264,23 +410,20 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script>
+				// Expanded Distance Matrix for major US lanes
 				const distanceMatrix = {
-					"Chicago, IL-Atlanta, GA": 700,
-					"Atlanta, GA-Chicago, IL": 700,
-					"Chicago, IL-Dallas, TX": 950,
-					"Dallas, TX-Chicago, IL": 950,
-					"Dallas, TX-Los Angeles, CA": 1400,
-					"Los Angeles, CA-Dallas, TX": 1400,
-					"Atlanta, GA-Harrisburg, PA": 800,
-					"Harrisburg, PA-Atlanta, GA": 800,
-					"Chicago, IL-Los Angeles, CA": 2100,
-					"Los Angeles, CA-Chicago, IL": 2100,
-					"Atlanta, GA-Dallas, TX": 780,
-					"Dallas, TX-Atlanta, GA": 780,
-					"Chicago, IL-Harrisburg, PA": 600,
-					"Harrisburg, PA-Chicago, IL": 600,
-					"Memphis, TN-Dallas, TX": 450,
-					"Dallas, TX-Memphis, TN": 450
+					"Chicago, IL-Atlanta, GA": 700, "Atlanta, GA-Chicago, IL": 700,
+					"Chicago, IL-Dallas, TX": 950, "Dallas, TX-Chicago, IL": 950,
+					"Dallas, TX-Los Angeles, CA": 1400, "Los Angeles, CA-Dallas, TX": 1400,
+					"Atlanta, GA-Harrisburg, PA": 800, "Harrisburg, PA-Atlanta, GA": 800,
+					"Chicago, IL-Los Angeles, CA": 2100, "Los Angeles, CA-Chicago, IL": 2100,
+					"Atlanta, GA-Dallas, TX": 780, "Dallas, TX-Atlanta, GA": 780,
+					"Chicago, IL-Harrisburg, PA": 600, "Harrisburg, PA-Chicago, IL": 600,
+					"Memphis, TN-Dallas, TX": 450, "Dallas, TN-Memphis, TN": 450,
+					"Chicago, IL-New York, NY": 790, "New York, NY-Chicago, IL": 790,
+					"Atlanta, GA-Miami, FL": 660, "Miami, FL-Atlanta, GA": 660,
+					"Los Angeles, CA-Seattle, WA": 1130, "Seattle, WA-Los Angeles, CA": 1130,
+					"Chicago, IL-Denver, K": 1000, "Denver, CO-Chicago, IL": 1000
 				};
 
 				function quickCalc() {
@@ -310,6 +453,9 @@
 								milesInput.value = distanceMatrix[key1];
 							} else if (distanceMatrix[key2]) {
 								milesInput.value = distanceMatrix[key2];
+							} else {
+								// Default fallback estimate if exact lane lookup is pending
+								milesInput.value = 850;
 							}
 						}
 					}
