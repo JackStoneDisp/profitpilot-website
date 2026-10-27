@@ -22,69 +22,17 @@
 							<img src="images/logo.png" alt="ProfitPilot Logistics Logo" class="custom-logo" />
 						</div>
 						<div class="content">
-							<div class="inner" style="max-width: 750px; width: 100%;">
+							<div class="inner">
 								<h1>We Handle the Hassle. You Haul the Profit.</h1>
 								<p>Reliable freight dispatching and back-office support tailored for independent owner-operators and fleets.</p>
 								
-								<!-- HOMEPAGE MASTER NET PROFIT & ROUTE CALCULATOR -->
-								<div style="background: rgba(0, 0, 0, 0.75); padding: 25px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.25); margin-top: 20px; text-align: left;">
-									<h3 style="margin-bottom: 10px; color: #fff; text-align: center;">🚛 Real-World Trip Profitability Calculator</h3>
-									<p style="font-size: 0.85em; text-align: center; margin-bottom: 20px; opacity: 0.85;">Select your lane or enter miles & gross pay to calculate true net earnings after all operating costs.</p>
-
-									<div class="fields" style="display: flex; gap: 15px; flex-wrap: wrap;">
-										<!-- Origin -->
-										<div class="field half" style="flex: 1; min-width: 200px;">
-											<label for="route-from" style="font-size: 0.8em; color: #ccc;">Origin (From):</label>
-											<select id="route-from" onchange="calculateMasterProfit()" style="background: #222; color: #fff; border: 1px solid #444; padding: 8px; border-radius: 4px; width: 100%;">
-												<option value="">-- Select Origin --</option>
-												<option value="Chicago, IL">Chicago, IL</option>
-												<option value="Atlanta, GA">Atlanta, GA</option>
-												<option value="Dallas, TX">Dallas, TX</option>
-												<option value="Los Angeles, CA">Los Angeles, CA</option>
-												<option value="Harrisburg, PA">Harrisburg, PA</option>
-												<option value="Indianapolis, IN">Indianapolis, IN</option>
-												<option value="Memphis, TN">Memphis, TN</option>
-											</select>
-										</div>
-
-										<!-- Destination -->
-										<div class="field half" style="flex: 1; min-width: 200px;">
-											<label for="route-to" style="font-size: 0.8em; color: #ccc;">Destination (To):</label>
-											<select id="route-to" onchange="calculateMasterProfit()" style="background: #222; color: #fff; border: 1px solid #444; padding: 8px; border-radius: 4px; width: 100%;">
-												<option value="">-- Select Destination --</option>
-												<option value="Chicago, IL">Chicago, IL</option>
-												<option value="Atlanta, GA">Atlanta, GA</option>
-												<option value="Dallas, TX">Dallas, TX</option>
-												<option value="Los Angeles, CA">Los Angeles, CA</option>
-												<option value="Harrisburg, PA">Harrisburg, PA</option>
-												<option value="Indianapolis, IN">Indianapolis, IN</option>
-												<option value="Memphis, TN">Memphis, TN</option>
-											</select>
-										</div>
-									</div>
-
-									<div class="fields" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
-										<div class="field half" style="flex: 1; min-width: 200px;">
-											<label for="master-miles" style="font-size: 0.8em; color: #ccc;">Total Trip Miles:</label>
-											<input type="number" id="master-miles" placeholder="e.g. 850" oninput="calculateMasterProfit()" style="background:#222; color:#fff; border:1px solid #444; padding:8px;" />
-										</div>
-										<div class="field half" style="flex: 1; min-width: 200px;">
-											<label for="master-gross" style="font-size: 0.8em; color: #ccc;">Gross Load Pay ($):</label>
-											<input type="number" id="master-gross" placeholder="e.g. 2800" oninput="calculateMasterProfit()" style="background:#222; color:#fff; border:1px solid #444; padding:8px;" />
-										</div>
-									</div>
-
-									<!-- Live Cost Breakdown Display -->
-									<div style="margin-top: 20px; background: rgba(0, 0, 0, 0.4); padding: 15px; border-radius: 6px; font-size: 0.85em;">
-										<div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span>Fuel & DEF (~$0.65/mi):</span> <strong id="br-fuel" style="color:#FF5722;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span>Maintenance & Tires (~$0.20/mi):</span> <strong id="br-maint" style="color:#FF5722;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span>Fixed Overhead (~$0.32/mi):</span> <strong id="br-overhead" style="color:#FF5722;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span>Tolls, Scales & Misc (~$0.08/mi):</span> <strong id="br-tolls" style="color:#FF5722;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span>Dispatch (5%) & Factoring (2%): Fees</span> <strong id="br-fees" style="color:#FF5722;">$0.00</strong></div>
-										<hr style="border-color: rgba(255,255,255,0.2); margin: 8px 0;" />
-										<div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span>Total Estimated Expenses:</span> <strong id="master-total-exp" style="color:#FF5722;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 1.1em;"><span>Estimated Net Profit:</span> <strong id="master-net-profit" style="color:#4CAF50;">$0.00</strong></div>
-										<div style="display: flex; justify-content: space-between; font-size: 1.1em;"><span>Net Profit Per Mile:</span> <strong id="master-net-pm" style="color:#2196F3;">$0.00 / mi</strong></div>
+								<!-- COMPACT HOME PAGE QUICK RATE CHECKER -->
+								<div style="background: rgba(0, 0, 0, 0.65); padding: 12px 18px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); margin-top: 15px; text-align: left;">
+									<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+										<span style="font-size: 0.85em; font-weight: bold; color: #fff;">⚡ Quick Estimator:</span>
+										<input type="number" id="quick-miles" placeholder="Miles" oninput="quickCalc()" style="background:#222; color:#fff; border:1px solid #444; padding:4px 8px; font-size:0.8em; width:80px;" />
+										<input type="number" id="quick-gross" placeholder="Gross Pay ($)" oninput="quickCalc()" style="background:#222; color:#fff; border:1px solid #444; padding:4px 8px; font-size:0.8em; width:110px;" />
+										<span style="font-size: 0.85em;">Est. Net: <strong id="quick-net" style="color:#4CAF50;">$0.00</strong></span>
 									</div>
 								</div>
 
@@ -94,6 +42,7 @@
 							<ul>
 								<li><a href="#services">Services</a></li>
 								<li><a href="#pricing">Pricing</a></li>
+								<li><a href="#calc">Calc & Tools</a></li>
 								<li><a href="#fuel">Fuel Hubs</a></li>
 								<li><a href="#about">About</a></li>
 								<li><a href="#onboarding">Onboarding</a></li>
@@ -129,10 +78,71 @@
 								</div>
 							</article>
 
+						<!-- Calc & Tools -->
+							<article id="calc">
+								<h2 class="major">Real-World Trip Profitability Calculator</h2>
+								<p>Select your lane or enter miles & gross pay to calculate true net earnings after all operating costs.</p>
+
+								<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 8px;">
+									<div class="fields">
+										<div class="field half">
+											<label for="route-from">Origin (From):</label>
+											<select id="route-from" onchange="calculateMasterProfit()" style="background: #222; color: #fff;">
+												<option value="">-- Select Origin --</option>
+												<option value="Chicago, IL">Chicago, IL</option>
+												<option value="Atlanta, GA">Atlanta, GA</option>
+												<option value="Dallas, TX">Dallas, TX</option>
+												<option value="Los Angeles, CA">Los Angeles, CA</option>
+												<option value="Harrisburg, PA">Harrisburg, PA</option>
+												<option value="Indianapolis, IN">Indianapolis, IN</option>
+												<option value="Memphis, TN">Memphis, TN</option>
+											</select>
+										</div>
+										<div class="field half">
+											<label for="route-to">Destination (To):</label>
+											<select id="route-to" onchange="calculateMasterProfit()" style="background: #222; color: #fff;">
+												<option value="">-- Select Destination --</option>
+												<option value="Chicago, IL">Chicago, IL</option>
+												<option value="Atlanta, GA">Atlanta, GA</option>
+												<option value="Dallas, TX">Dallas, TX</option>
+												<option value="Los Angeles, CA">Los Angeles, CA</option>
+												<option value="Harrisburg, PA">Harrisburg, PA</option>
+												<option value="Indianapolis, IN">Indianapolis, IN</option>
+												<option value="Memphis, TN">Memphis, TN</option>
+											</select>
+										</div>
+										<div class="field half">
+											<label for="master-miles">Total Trip Miles:</label>
+											<input type="number" id="master-miles" placeholder="e.g. 850" oninput="calculateMasterProfit()" />
+										</div>
+										<div class="field half">
+											<label for="master-gross">Gross Load Pay ($):</label>
+											<input type="number" id="master-gross" placeholder="e.g. 2800" oninput="calculateMasterProfit()" />
+										</div>
+									</div>
+
+									<!-- Full Expense & Net Display -->
+									<div style="margin-top: 20px; background: rgba(0, 0, 0, 0.4); padding: 18px; border-radius: 6px; font-size: 0.9em;">
+										<h4 style="margin-bottom: 10px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px;">Itemized Expense Breakdown</h4>
+										<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Fuel & DEF (~$0.65/mi):</span> <strong id="br-fuel" style="color:#FF5722;">$0.00</strong></div>
+										<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Maintenance & Tires (~$0.20/mi):</span> <strong id="br-maint" style="color:#FF5722;">$0.00</strong></div>
+										<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Fixed Overhead (~$0.32/mi):</span> <strong id="br-overhead" style="color:#FF5722;">$0.00</strong></div>
+										<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Tolls, Scales & Misc (~$0.08/mi):</span> <strong id="br-tolls" style="color:#FF5722;">$0.00</strong></div>
+										<div style="display: flex; justify-content: space-between; margin-bottom: 10px;"><span>Dispatch (5%) & Factoring (2%) Fees:</span> <strong id="br-fees" style="color:#FF5722;">$0.00</strong></div>
+										
+										<hr style="border-color: rgba(255,255,255,0.2); margin: 10px 0;" />
+										
+										<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>Total Estimated Expenses:</span> <strong id="master-total-exp" style="color:#FF5722;">$0.00</strong></div>
+										<div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 1.15em;"><span>Estimated Net Profit:</span> <strong id="master-net-profit" style="color:#4CAF50;">$0.00</strong></div>
+										<div style="display: flex; justify-content: space-between; font-size: 1.1em;"><span>Net Profit Per Mile:</span> <strong id="master-net-pm" style="color:#2196F3;">$0.00 / mi</strong></div>
+									</div>
+								</div>
+							</article>
+
 						<!-- Fuel Hubs -->
 							<article id="fuel">
 								<h2 class="major">US Freight Hubs & Diesel Rates</h2>
-								<p>Track regional diesel benchmarks and check benchmark fuel costs across major US dispatch corridors.</p>
+								<p>Track regional diesel benchmarks across major US dispatch corridors.</p>
 								
 								<div class="fields">
 									<div class="field">
@@ -254,7 +264,6 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script>
-				// Distance lookup dictionary for major hubs
 				const distanceMatrix = {
 					"Chicago, IL-Atlanta, GA": 700,
 					"Atlanta, GA-Chicago, IL": 700,
@@ -269,18 +278,31 @@
 					"Atlanta, GA-Dallas, TX": 780,
 					"Dallas, TX-Atlanta, GA": 780,
 					"Chicago, IL-Harrisburg, PA": 600,
-					"Harrisburg, PA-Chicago, IL": 600
+					"Harrisburg, PA-Chicago, IL": 600,
+					"Memphis, TN-Dallas, TX": 450,
+					"Dallas, TX-Memphis, TN": 450
 				};
+
+				function quickCalc() {
+					const miles = parseFloat(document.getElementById('quick-miles').value) || 0;
+					const gross = parseFloat(document.getElementById('quick-gross').value) || 0;
+					if (miles > 0 && gross > 0) {
+						const exp = (miles * 1.25) + (gross * 0.07);
+						const net = gross - exp;
+						document.getElementById('quick-net').innerText = '$' + net.toFixed(2);
+					} else {
+						document.getElementById('quick-net').innerText = '$0.00';
+					}
+				}
 
 				function calculateMasterProfit() {
 					const fromCity = document.getElementById('route-from').value;
 					const toCity = document.getElementById('route-to').value;
 					const milesInput = document.getElementById('master-miles');
 					
-					// Auto-calculate miles if route exists
 					if (fromCity && toCity) {
 						if (fromCity === toCity) {
-							milesInput.value = 100; // Local / regional default
+							milesInput.value = 100;
 						} else {
 							const key1 = fromCity + "-" + toCity;
 							const key2 = toCity + "-" + fromCity;
@@ -296,20 +318,16 @@
 					const gross = parseFloat(document.getElementById('master-gross').value) || 0;
 
 					if (miles > 0) {
-						// Per-mile industry standard breakdowns
-						const fuelCost = miles * 0.65;      // Fuel & DEF (~$0.65/mi)
-						const maintCost = miles * 0.20;     // Maintenance & Tires (~$0.20/mi)
-						const overheadCost = miles * 0.32;  // Fixed Overhead (~$0.32/mi)
-						const tollsCost = miles * 0.08;     // Tolls, Scales, Misc (~$0.08/mi)
-						
-						// Percentage-based fees (5% Dispatch + 2% Factoring = 7% of gross)
+						const fuelCost = miles * 0.65;
+						const maintCost = miles * 0.20;
+						const overheadCost = miles * 0.32;
+						const tollsCost = miles * 0.08;
 						const feesCost = gross * 0.07;
 
 						const totalExpenses = fuelCost + maintCost + overheadCost + tollsCost + feesCost;
 						const netProfit = gross - totalExpenses;
 						const netPerMile = netProfit / miles;
 
-						// Update UI breakdown
 						document.getElementById('br-fuel').innerText = '$' + fuelCost.toFixed(2);
 						document.getElementById('br-maint').innerText = '$' + maintCost.toFixed(2);
 						document.getElementById('br-overhead').innerText = '$' + overheadCost.toFixed(2);
