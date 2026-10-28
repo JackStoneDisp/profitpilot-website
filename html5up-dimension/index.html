@@ -534,58 +534,56 @@
 						document.getElementById('quick-net').innerText = '$0.00';
 					}
 				}
-// 1. eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImI3MDgxMTc5ZDZjNjQwMjJiOTE5OTBjNGJlNWMxYmRhIiwiaCI6Im11cm11cjY0In0=
-const ORS_API_KEY = "PASTE_YOUR_KEY_HERE";
+				
+				const ORS_API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImI3MDgxMTc5ZDZjNjQwMjJiOTE5OTBjNGJlNWMxYmRhIiwiaCI6Im11cm11cjY0In0=";
 
-// 2. NEW FUNCTION: Get real truck miles
-async function getRealTruckMiles(lat1, lon1, lat2, lon2) {
-    // This is the CORRECT new URL based on the official announcement [citation:2]
-    const url = `https://api.heigit.org/openrouteservice/v2/directions/driving-hgv?api_key=${ORS_API_KEY}`;
-    
-    const body = {
-        coordinates: [[lon1, lat1], [lon2, lat2]] // ORS needs [Lon, Lat]
-    };
+				// 2. NEW FUNCTION: Get real truck miles
+				async function getRealTruckMiles(lat1, lon1, lat2, lon2) {
+					const url = `https://api.heigit.org/openrouteservice/v2/directions/driving-hgv?api_key=${ORS_API_KEY}`;
+					const body = { coordinates: [[lon1, lat1], [lon2, lat2]] };
 
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        });
-        
-        const data = await response.json();
-        if (data.routes && data.routes.length > 0) {
-            const meters = data.routes[0].summary.distance;
-            return Math.round(meters * 0.000621371); // Convert to miles
-        }
-    } catch (error) {
-        console.error("API Error:", error);
-    }
-    return 0; 
-}
+					try {
+						const response = await fetch(url, {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify(body)
+						});
+						
+						const data = await response.json();
+						if (data.routes && data.routes.length > 0) {
+							const meters = data.routes[0].summary.distance;
+							return Math.round(meters * 0.000621371); // Convert to miles
+						}
+					} catch (error) {
+						console.error("API Error:", error);
+					}
+					return 0; 
+				}
 
-// 3. UPDATE YOUR CALCULATOR FUNCTION
-// Change "function updateRouteAndCalc()" to "async function updateRouteAndCalc()"
-async function updateRouteAndCalc() { 
-    const fromCity = document.getElementById('route-from').value;
-    const toCity = document.getElementById('route-to').value;
-    const milesInput = document.getElementById('master-miles');
-    
-    // ONLY call the API if both cities are selected and different
-    if (fromCity && toCity && fromCity !== toCity) {
-        milesInput.value = "..."; // Loading indicator
-        const c1 = cityCoords[fromCity];
-        const c2 = cityCoords[toCity];
-        
-        // Use the new function
-        const apiMiles = await getRealTruckMiles(c1.lat, c1.lon, c2.lat, c2.lon);
-        milesInput.value = apiMiles;
-    } else if (fromCity === toCity) {
-        milesInput.value = 0;
-    }
-}								
+				// 3. FUNCTION FOR DROPDOWNS (Calls the API)
+				async function updateRouteAndCalc() { 
+					const fromCity = document.getElementById('route-from').value;
+					const toCity = document.getElementById('route-to').value;
+					const milesInput = document.getElementById('master-miles');
+					
+					if (fromCity && toCity) {
+						if (fromCity === toCity) {
+							milesInput.value = 0;
+						} else if (cityCoords[fromCity] && cityCoords[toCity]) {
+							milesInput.value = "..."; // Loading indicator
+							const c1 = cityCoords[fromCity];
+							const c2 = cityCoords[toCity];
+							
+							const apiMiles = await getRealTruckMiles(c1.lat, c1.lon, c2.lat, c2.lon);
+							milesInput.value = apiMiles;
+						}
+					}
+					calculateProfitOnly(); // Run the math after miles are updated
+				}
 
-					const miles = parseFloat(milesInput.value) || 0;
+				// 4. FUNCTION FOR MATH ONLY (Does not touch the miles input)
+				function calculateProfitOnly() {
+					const miles = parseFloat(document.getElementById('master-miles').value) || 0;
 					const gross = parseFloat(document.getElementById('master-gross').value) || 0;
 
 					const fuelCost = activeExpenses.fuel ? (miles * 0.65) : 0;
@@ -610,6 +608,9 @@ async function updateRouteAndCalc() {
 						document.getElementById('master-total-exp').innerText = '$' + totalExpenses.toFixed(2);
 						document.getElementById('master-net-profit').innerText = '$' + netProfit.toFixed(2);
 						document.getElementById('master-net-pm').innerText = '$' + netPerMile.toFixed(2) + ' / mi';
+						
+						// Make negative profit turn red
+						document.getElementById('master-net-profit').style.color = netProfit < 0 ? '#FF5722' : '#4CAF50';
 					} else {
 						document.getElementById('br-fuel').innerText = '$0.00';
 						document.getElementById('br-maint').innerText = '$0.00';
@@ -620,9 +621,9 @@ async function updateRouteAndCalc() {
 						document.getElementById('master-total-exp').innerText = '$0.00';
 						document.getElementById('master-net-profit').innerText = '$0.00';
 						document.getElementById('master-net-pm').innerText = '$0.00 / mi';
+						document.getElementById('master-net-profit').style.color = '#4CAF50';
 					}
 				}
-
 				function updateModalHub() {
 					const val = document.getElementById('modal-hub-select').value;
 					const resDiv = document.getElementById('modal-hub-result');
