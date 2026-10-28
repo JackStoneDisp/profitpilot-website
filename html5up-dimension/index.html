@@ -291,9 +291,13 @@
 											<span><button type="button" class="toggle-btn" id="btn-meals" onclick="toggleExpense('meals')">[-]</button> Driver Meals & Per Diem (~$0.07/mi):</span> 
 											<strong id="br-meals" style="color:#FF5722;">$0.00</strong>
 										</div>
-										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-											<span><button type="button" class="toggle-btn" id="btn-fees" onclick="toggleExpense('fees')">[-]</button> Dispatch (5%) + Factoring (2% if applicable):</span> 
+																				<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+											<span><button type="button" class="toggle-btn" id="btn-fees" onclick="toggleExpense('fees')">[-]</button> Dispatch (5%):</span> 
 											<strong id="br-fees" style="color:#FF5722;">$0.00</strong>
+										</div>
+										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+											<span><button type="button" class="toggle-btn" id="btn-factoring" onclick="toggleExpense('factoring')">[-]</button> Factoring (2% if applicable):</span> 
+											<strong id="br-factoring" style="color:#FF5722;">$0.00</strong>
 										</div>
 										
 										<hr style="border-color: rgba(255,255,255,0.2); margin: 10px 0;" />
@@ -310,7 +314,8 @@
 											• <strong>Fixed Overhead:</strong> Pro-rated commercial truck insurance, truck/trailer financing & permits.<br>
 											• <strong>Tolls, Scales & Misc:</strong> Turnpike/bridge tolls, CAT scale weigh-ins & cargo securement tools.<br>
 											• <strong>Driver Meals & Per Diem:</strong> On-the-road food, shower/parking credits & daily living costs.<br>
-											• <strong>Dispatch & Factoring Fees:</strong> ProfitPilot 5% dispatch commission plus an optional 2% fee if you use invoice factoring.
+											• <strong>Dispatch Fee:</strong> ProfitPilot 5% dispatch commission.<br>
+											• <strong>Factoring Fee:</strong> Optional 2% fee if you use invoice factoring.
 										</div>
 									</div>
 								</div>
@@ -531,15 +536,15 @@
 				};
 
 				// Expense inclusion toggles
-				const activeExpenses = {
+								const activeExpenses = {
 					fuel: true,
 					maint: true,
 					overhead: true,
 					tolls: true,
 					meals: true,
-					fees: true
+					fees: true,
+					factoring: true
 				};
-
 				function toggleExpense(key) {
 					activeExpenses[key] = !activeExpenses[key];
 					const btn = document.getElementById('btn-' + key);
@@ -625,10 +630,11 @@
 					const overheadCost = activeExpenses.overhead ? (miles * 0.32) : 0;
 					const tollsCost = activeExpenses.tolls ? (miles * 0.08) : 0;
 					const mealsCost = activeExpenses.meals ? (miles * 0.07) : 0;
-					const feesCost = activeExpenses.fees ? (gross * 0.07) : 0;
+										const feesCost = activeExpenses.fees ? (gross * 0.05) : 0;
+					const factoringCost = activeExpenses.factoring ? (gross * 0.02) : 0;
 
 					if (miles > 0 || gross > 0) {
-						const totalExpenses = fuelCost + maintCost + overheadCost + tollsCost + mealsCost + feesCost;
+						const totalExpenses = fuelCost + maintCost + overheadCost + tollsCost + mealsCost + feesCost + factoringCost;
 						const netProfit = gross - totalExpenses;
 						const netPerMile = miles > 0 ? (netProfit / miles) : 0;
 
@@ -638,6 +644,7 @@
 						document.getElementById('br-tolls').innerText = '$' + tollsCost.toFixed(2);
 						document.getElementById('br-meals').innerText = '$' + mealsCost.toFixed(2);
 						document.getElementById('br-fees').innerText = '$' + feesCost.toFixed(2);
+						document.getElementById('br-factoring').innerText = '$' + factoringCost.toFixed(2);
 
 						document.getElementById('master-total-exp').innerText = '$' + totalExpenses.toFixed(2);
 						document.getElementById('master-net-profit').innerText = '$' + netProfit.toFixed(2);
@@ -646,6 +653,7 @@
 						// Make negative profit turn red
 						document.getElementById('master-net-profit').style.color = netProfit < 0 ? '#FF5722' : '#4CAF50';
 					} else {
+						document.getElementById('br-factoring').innerText = '$0.00';
 						document.getElementById('br-fuel').innerText = '$0.00';
 						document.getElementById('br-maint').innerText = '$0.00';
 						document.getElementById('br-overhead').innerText = '$0.00';
