@@ -520,7 +520,7 @@
 						btn.innerText = '[+]';
 						btn.classList.add('excluded');
 					}
-					calculateMasterProfit();
+					updateRouteAndCalc();
 				}
 
 				function quickCalc() {
@@ -565,8 +565,8 @@ async function getRealTruckMiles(lat1, lon1, lat2, lon2) {
 }
 
 // 3. UPDATE YOUR CALCULATOR FUNCTION
-// Change "function calculateMasterProfit()" to "async function calculateMasterProfit()"
-async function calculateMasterProfit() { 
+// Change "function updateRouteAndCalc()" to "async function updateRouteAndCalc()"
+async function updateRouteAndCalc() { 
     const fromCity = document.getElementById('route-from').value;
     const toCity = document.getElementById('route-to').value;
     const milesInput = document.getElementById('master-miles');
