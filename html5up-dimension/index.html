@@ -2,9 +2,10 @@
 <!--
 	Dimension by HTML5 UP | ProfitPilot Logistics Utility Upgrade
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>ProfitPilot Logistics | Freight Dispatch Services</title>
+		<meta name="description" content="Freight dispatching and back-office support for US owner-operators. Flat 5% commission, no contracts.">
 		<link rel="icon" href="images/favicon.PNG" type="image/PNG">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -49,7 +50,7 @@
 				<!-- Header -->
 					<header id="header">
 						<div class="logo">
-							<img src="images/logo.png" alt="ProfitPilot Logistics Logo" class="custom-logo" />
+							<img src="images/logo.png" alt="ProfitPilot Logistics Logo" class="custom-logo" width="100" height="100" />
 						</div>
 						<div class="content">
 							<div class="inner">
@@ -293,7 +294,7 @@
 											<strong id="br-meals" style="color:#FF5722;">$0.00</strong>
 										</div>
 										<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-											<span><button type="button" class="toggle-btn" id="btn-fees" onclick="toggleExpense('fees')">[-]</button> Dispatch (5%) & Factoring (2%):</span> 
+											<span><button type="button" class="toggle-btn" id="btn-fees" onclick="toggleExpense('fees')">[-]</button> Dispatch (5%) + Factoring (2% if applicable):</span> 
 											<strong id="br-fees" style="color:#FF5722;">$0.00</strong>
 										</div>
 										
@@ -311,7 +312,7 @@
 											• <strong>Fixed Overhead:</strong> Pro-rated commercial truck insurance, truck/trailer financing & permits.<br>
 											• <strong>Tolls, Scales & Misc:</strong> Turnpike/bridge tolls, CAT scale weigh-ins & cargo securement tools.<br>
 											• <strong>Driver Meals & Per Diem:</strong> On-the-road food, shower/parking credits & daily living costs.<br>
-											• <strong>Dispatch & Factoring Fees:</strong> ProfitPilot 5% dispatch commission and standard 2% invoice factoring fee.
+											• <strong>Dispatch & Factoring Fees:</strong> ProfitPilot 5% dispatch commission plus an optional 2% fee if you use invoice factoring.
 										</div>
 									</div>
 								</div>
@@ -319,8 +320,8 @@
 
 						<!-- Fuel Hubs -->
 							<article id="fuel">
-								<h2 class="major">US Freight Hubs & Diesel Rates</h2>
-								<p>Track regional diesel benchmarks and check local market rates across all major US freight hubs.</p>
+								<h2 class="major">US Freight Hubs & Estimated Diesel Rates</h2>
+								<p>Illustrative regional diesel benchmarks for planning purposes. Actual pump prices vary by station and day.</p>
 								
 								<div class="fields">
 									<div class="field">
@@ -419,6 +420,8 @@
 								<h2 class="major">Get Dispatched</h2>
 								<p>Ready to boost your profitability? Send us a message or request a callback.</p>
 								<form method="post" action="https://formspree.io/f/xppqkqrb">
+									<input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+									
 									<div class="fields">
 										<div class="field half">
 											<label for="name">Name / Fleet Name</label>
@@ -523,15 +526,19 @@
 					updateRouteAndCalc();
 				}
 
-				function quickCalc() {
+								function quickCalc() {
 					const miles = parseFloat(document.getElementById('quick-miles').value) || 0;
 					const gross = parseFloat(document.getElementById('quick-gross').value) || 0;
+					const netEl = document.getElementById('quick-net');
+					
 					if (miles > 0 && gross > 0) {
 						const exp = (miles * 1.32) + (gross * 0.07);
 						const net = gross - exp;
-						document.getElementById('quick-net').innerText = '$' + net.toFixed(2);
+						netEl.innerText = '$' + net.toFixed(2);
+						netEl.style.color = net < 0 ? '#FF5722' : '#4CAF50';
 					} else {
-						document.getElementById('quick-net').innerText = '$0.00';
+						netEl.innerText = '$0.00';
+						netEl.style.color = '#4CAF50';
 					}
 				}
 				
