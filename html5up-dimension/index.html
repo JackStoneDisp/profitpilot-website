@@ -75,7 +75,7 @@
 				
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* Clean inputs with a little breathing room */
+				/* Clean inputs with breathing room */
 				#calc input, #calc select, #calc textarea {
 					background: transparent !important;
 					border: none !important;
@@ -83,7 +83,7 @@
 					color: #000 !important;
 					width: auto !important;
 					min-width: 250px;
-					padding: 4px 2px 2px 2px !important; /* Adds space above the line */
+					padding: 4px 2px 2px 2px !important; 
 					margin-bottom: 0 !important;
 					font-size: 14px !important;
 					font-weight: bold;
@@ -96,7 +96,7 @@
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				#calc div { background: transparent !important; border-color: transparent !important; }
 				
-				/* Headings */
+				/* Main Title */
 				#calc h2 { 
 					font-size: 17px !important; 
 					font-weight: bold !important; 
@@ -105,12 +105,25 @@
 					letter-spacing: 1px; 
 					white-space: nowrap !important; 
 				}
-				#calc h2 br { display: none !important; } 
+				/* Add space before the hidden <br> */
+				#calc h2 br { display: none !important; }
+				#calc h2 br::before { content: " " !important; }
+
+				/* Sub-Heading (Fix wrapping) */
+				#calc h4 { 
+					font-size: 13px !important; /* Shrunk slightly to fit on one line */
+					font-weight: bold !important; 
+					margin-top: 15px !important; 
+					margin-bottom: 8px !important; 
+					border-bottom: 2px solid #000; 
+					padding-bottom: 2px; 
+					text-transform: uppercase; 
+					white-space: nowrap !important; /* Forces one line */
+				}
 				
-				#calc h4 { font-size: 15px !important; font-weight: bold !important; margin-top: 15px !important; margin-bottom: 8px !important; border-bottom: 2px solid #000; padding-bottom: 2px; text-transform: uppercase; }
 				#calc p { font-size: 12px !important; margin-bottom: 10px !important; }
 				
-				/* GIVE THE FIELDS SPACE */
+				/* Field Spacing */
 				#calc .fields .field { margin-bottom: 15px !important; margin-top: 0 !important; }
 				#calc .fields label { margin-bottom: 2px !important; padding-top: 0 !important; font-size: 12px !important; display: block; }
 
