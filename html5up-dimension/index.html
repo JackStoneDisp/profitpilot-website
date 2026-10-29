@@ -75,7 +75,7 @@
 				
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* Clean inputs */
+				/* Clean and tighten ALL inputs and dropdowns */
 				#calc input, #calc select, #calc textarea {
 					background: transparent !important;
 					border: none !important;
@@ -83,9 +83,13 @@
 					color: #000 !important;
 					width: auto !important;
 					min-width: 250px;
-					padding: 0 !important; /* Removes padding inside input */
+					padding: 0 !important; 
+					margin-bottom: 0 !important;
 					font-size: 14px !important;
 					font-weight: bold;
+					height: auto !important; /* FORCES DROPDOWNS TO SHRINK */
+					min-height: 0 !important; /* REMOVES THE INVISIBLE BOX HEIGHT */
+					line-height: 1.2 !important;
 				}
 				
 				#calc * { color: #000 !important; }
@@ -99,7 +103,7 @@
 				
 				/* TIGHTEN INPUT FIELD SPACING */
 				#calc .fields .field { margin-bottom: 2px !important; margin-top: 0 !important; }
-				#calc .fields label { margin-bottom: 0 !important; padding-top: 0 !important; font-size: 12px !important; }
+				#calc .fields label { margin-bottom: 0 !important; padding-top: 0 !important; font-size: 12px !important; display: block; }
 
 				/* Expense rows */
 				#calc .row-item { 
@@ -127,7 +131,8 @@
 					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><g transform='rotate(-35 200 150)'><text x='50%' y='40%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>ProfitPilot Logistics</text><text x='50%' y='55%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>profitpilotlogistics.com</text></g><g transform='rotate(-35 200 150)'><text x='50%' y='80%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>ProfitPilot Logistics</text><text x='50%' y='95%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>profitpilotlogistics.com</text></g></svg>");
 					background-repeat: repeat;
 				}
-			}				
+			}
+					
 		</style>
 	</head>
 	<body class="is-preload">
