@@ -48,8 +48,7 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-									@media print {
-				/* Reduce the browser's default page margin to almost zero to fit everything */
+			@media print {
 				@page { 
 					margin: 0.2cm !important; 
 					size: auto;
@@ -71,6 +70,8 @@
 					margin: 0 !important;
 					padding: 0 !important;
 					position: relative;
+					/* SHRINK OVERALL PDF TEXT SIZE */
+					font-size: 11px !important;
 				}
 				
 				#wrapper { height: auto !important; min-height: auto !important; }
@@ -80,6 +81,7 @@
 					background: transparent !important;
 					border: 1px solid #000 !important;
 					color: #000 !important;
+					padding: 4px !important; /* Tighten input box padding */
 				}
 				
 				#calc * { color: #000 !important; }
@@ -87,26 +89,27 @@
 				#calc div { background: transparent !important; border-color: #ccc !important; }
 				
 				/* TIGHTEN SPACING */
-				#calc .fields .field { margin-bottom: 5px !important; }
-				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
-				#calc h2 { font-size: 20px !important; margin-bottom: 10px !important; }
-				#calc p { margin-bottom: 10px !important; }
+				#calc .fields .field { margin-bottom: 3px !important; }
+				#calc h4 { margin-top: 8px !important; margin-bottom: 4px !important; font-size: 13px !important; }
+				#calc h2 { font-size: 18px !important; margin-bottom: 8px !important; }
+				#calc p { font-size: 11px !important; margin-bottom: 8px !important; }
 				
 				/* Make the NOTE text much smaller */
 				#calc div[style*="font-size: 0.75em"] { 
-					font-size: 9px !important; 
+					font-size: 8px !important; 
 					line-height: 1.2 !important; 
 					margin-top: 5px !important; 
 				}
 
-				/* REPEATING WATERMARK (Alternating Large/Small) */
+				/* REPEATING WATERMARK (INCREASED SIZE) */
 				#calc::after {
 					content: "";
 					position: absolute;
 					top: 0; left: 0; width: 100%; height: 100%;
 					z-index: -1;
 					pointer-events: none;
-					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='350' height='250'><g transform='rotate(-35 175 125)'><text x='50%' y='40%' text-anchor='middle' font-family='Arial, sans-serif' font-size='16' font-weight='bold' fill='rgba(0,0,0,0.05)' letter-spacing='2'>ProfitPilot Logistics</text><text x='50%' y='55%' text-anchor='middle' font-family='Arial, sans-serif' font-size='10' fill='rgba(0,0,0,0.05)'>profitpilotlogistics.com</text></g><g transform='rotate(-35 175 125)'><text x='50%' y='80%' text-anchor='middle' font-family='Arial, sans-serif' font-size='10' fill='rgba(0,0,0,0.05)'>ProfitPilot Logistics</text><text x='50%' y='95%' text-anchor='middle' font-family='Arial, sans-serif' font-size='16' font-weight='bold' fill='rgba(0,0,0,0.05)' letter-spacing='2'>profitpilotlogistics.com</text></g></svg>");
+					/* I increased the SVG width/height and the font sizes inside this URL */
+					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><g transform='rotate(-35 200 150)'><text x='50%' y='40%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>ProfitPilot Logistics</text><text x='50%' y='55%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>profitpilotlogistics.com</text></g><g transform='rotate(-35 200 150)'><text x='50%' y='80%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>ProfitPilot Logistics</text><text x='50%' y='95%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>profitpilotlogistics.com</text></g></svg>");
 					background-repeat: repeat;
 				}
 			}
