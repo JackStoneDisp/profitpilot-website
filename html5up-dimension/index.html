@@ -48,13 +48,13 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-											@page { 
-				margin: 0.5cm; 
-				size: auto;
-			}
-							/* PROFESSIONAL REPEATING WATERMARK */
-				#calc {
-								/* PROFESSIONAL REPEATING WATERMARK */
+			@media print {
+				@page { 
+					margin: 0.5cm; 
+					size: auto;
+				}
+
+				/* PROFESSIONAL REPEATING WATERMARK */
 				#calc {
 					position: relative;
 				}
