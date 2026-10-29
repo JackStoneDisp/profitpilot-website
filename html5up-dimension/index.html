@@ -48,24 +48,20 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-						@media print {
+			@media print {
 				@page { 
-					margin: 1cm; 
+					margin: 0.5cm !important; 
 					size: auto;
 				}
 				
-				/* Force everything to one page */
 				body { 
 					background: #fff !important; 
 					color: #000 !important; 
-					height: 100vh !important;
-					overflow: hidden !important;
+					/* REMOVED overflow: hidden - it was causing the page spill */
 				}
 
-				/* Hide unneeded elements */
 				#header, #footer, #bg, #main > article:not(#calc) { display: none !important; }
 				
-				/* Reset the calculator container */
 				#main > article#calc { 
 					display: block !important; 
 					background: #fff !important; 
@@ -75,21 +71,20 @@
 				}
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* Fix text colors and hide buttons */
+				/* Make text black and hide buttons */
 				#calc h2, #calc p, #calc label, #calc span, #calc strong, #calc div { color: #000 !important; background: transparent !important; border-color: #ccc !important; }
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				
-				/* Tighten spacing so it fits perfectly */
-				#calc .fields .field { margin-bottom: 8px !important; }
-				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
+				/* SHRINK FONTS TO FIT ONE PAGE */
+				#calc { font-size: 12px !important; }
+				#calc .fields .field { margin-bottom: 5px !important; }
+				#calc h2 { font-size: 18px !important; margin-bottom: 10px !important; }
+				#calc h4 { font-size: 14px !important; margin-top: 10px !important; margin-bottom: 5px !important; }
 
-				/* THE REPEATING WATERMARK */
-				#calc {
-					position: relative;
-				}
-				#calc::before {
+				/* WATERMARK ON BODY (Always shows) */
+				body::before {
 					content: "";
-					position: absolute;
+					position: fixed;
 					top: 0;
 					left: 0;
 					width: 100%;
