@@ -48,14 +48,57 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-								@media print {
-				body { background: #fff !important; color: #000 !important; }
+											@page { 
+				margin: 0.5cm; 
+				size: auto;
+			}
+			@media print {
+				body { 
+					background: #fff !important; 
+					color: #000 !important; 
+					-webkit-print-color-adjust: exact; 
+				}
+				
 				#header, #footer, #bg, #main > article:not(#calc) { display: none !important; }
-				#main > article#calc { display: block !important; background: #fff !important; color: #000 !important; }
+				
+				#main > article#calc { 
+					display: block !important; 
+					background: #fff !important; 
+					color: #000 !important; 
+					margin: 0 !important;
+					padding: 0 !important;
+				}
 				#wrapper { height: auto !important; min-height: auto !important; }
+				
 				#calc h2, #calc p, #calc label, #calc span, #calc strong { color: #000 !important; }
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				#calc div { background: transparent !important; border-color: #ccc !important; }
+				
+				#calc .fields .field { margin-bottom: 10px !important; }
+				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
+				
+				/* PROFESSIONAL WATERMARK */
+				#calc::before {
+					content: "ProfitPilot Logistics \A www.profitpilotlogistics.com \A dispatch@profitpilotlogistics.com";
+					white-space: pre;
+					position: fixed;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%) rotate(-35deg);
+					font-size: 2.5em;
+					font-family: 'Courier New', Courier, monospace;
+					font-weight: bold;
+					color: rgba(0, 0, 0, 0.06);
+					z-index: -1;
+					pointer-events: none;
+					text-align: center;
+					line-height: 1.5;
+					border: 3px solid rgba(0, 0, 0, 0.06);
+					padding: 40px 80px;
+					border-radius: 15px;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+				}
 			}
 		</style>
 	</head>
