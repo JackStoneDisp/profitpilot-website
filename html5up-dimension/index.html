@@ -72,7 +72,10 @@
 										<span style="font-size: 1.1em; font-weight: bold; color: #ff5722;">⚡ Quick Profitability Estimator:</span>
 										<input type="number" min="0" id="quick-miles" placeholder="Miles" oninput="quickCalc()" style="width:100px; padding:8px; font-size:1em;" />
 										<input type="number" min="0" id="quick-gross" placeholder="Gross Pay ($)" oninput="quickCalc()" style="width:130px; padding:8px; font-size:1em;" />
-										<span style="font-size: 1em; margin-left: 5px;">Your Estimated Net Profit: <strong id="quick-net" style="color:#4CAF50; font-size: 1.2em;">$0.00</strong></span>
+										<span style="font-size: 1em; margin-left: 5px; margin-right: 15px;">Your Est. Net: <strong id="quick-net" style="color:#4CAF50; font-size: 1.2em;">$0.00</strong></span>
+<span style="font-size: 0.85em; color: #2196F3; border-left: 1px solid rgba(255,255,255,0.3); padding-left: 15px;">
+    Net Profit Per Mile: <strong id="quick-net-pm" style="font-size: 1.1em;">$0.00 / mi</strong>
+</span>
 									</div>
 								</div>
 
@@ -663,19 +666,27 @@
 					calculateProfitOnly();
 				}
 
-								function quickCalc() {
+												function quickCalc() {
 					const miles = parseFloat(document.getElementById('quick-miles').value) || 0;
 					const gross = parseFloat(document.getElementById('quick-gross').value) || 0;
 					const netEl = document.getElementById('quick-net');
+					const netPmEl = document.getElementById('quick-net-pm');
 					
 					if (miles > 0 && gross > 0) {
 						const exp = (miles * 1.32) + (gross * 0.07);
 						const net = gross - exp;
+						const netPerMile = net / miles;
+						
 						netEl.innerText = '$' + net.toFixed(2);
 						netEl.style.color = net < 0 ? '#FF5722' : '#4CAF50';
+						
+						netPmEl.innerText = '$' + netPerMile.toFixed(2) + ' / mi';
+						netPmEl.style.color = netPerMile < 0 ? '#FF5722' : '#2196F3';
 					} else {
 						netEl.innerText = '$0.00';
 						netEl.style.color = '#4CAF50';
+						netPmEl.innerText = '$0.00 / mi';
+						netPmEl.style.color = '#2196F3';
 					}
 				}
 				
