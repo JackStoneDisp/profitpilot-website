@@ -48,13 +48,42 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-			@media print {
+						@media print {
 				@page { 
-					margin: 0.5cm; 
+					margin: 1cm; 
 					size: auto;
 				}
+				
+				/* Force everything to one page */
+				body { 
+					background: #fff !important; 
+					color: #000 !important; 
+					height: 100vh !important;
+					overflow: hidden !important;
+				}
 
-				/* PROFESSIONAL REPEATING WATERMARK */
+				/* Hide unneeded elements */
+				#header, #footer, #bg, #main > article:not(#calc) { display: none !important; }
+				
+				/* Reset the calculator container */
+				#main > article#calc { 
+					display: block !important; 
+					background: #fff !important; 
+					color: #000 !important; 
+					margin: 0 !important;
+					padding: 0 !important;
+				}
+				#wrapper { height: auto !important; min-height: auto !important; }
+				
+				/* Fix text colors and hide buttons */
+				#calc h2, #calc p, #calc label, #calc span, #calc strong, #calc div { color: #000 !important; background: transparent !important; border-color: #ccc !important; }
+				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
+				
+				/* Tighten spacing so it fits perfectly */
+				#calc .fields .field { margin-bottom: 8px !important; }
+				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
+
+				/* THE REPEATING WATERMARK */
 				#calc {
 					position: relative;
 				}
@@ -67,12 +96,10 @@
 					height: 100%;
 					z-index: -1;
 					pointer-events: none;
-					
-					/* This creates the repeating grid pattern */
-					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='350' height='200'><text x='50%' y='50%' transform='rotate(-30 175 100)' text-anchor='middle' dominant-baseline='middle' font-family='Courier New' font-size='12' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='1'>ProfitPilot Logistics | profitpilotlogistics.com</text></svg>");
+					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='350' height='200'><text x='50%' y='50%' transform='rotate(-30 175 100)' text-anchor='middle' dominant-baseline='middle' font-family='Courier New' font-size='14' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='1'>ProfitPilot Logistics | profitpilotlogistics.com</text></svg>");
 					background-repeat: repeat;
 				}
-
+			}
 				#calc .fields .field { margin-bottom: 10px !important; }
 				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
 		</style>
