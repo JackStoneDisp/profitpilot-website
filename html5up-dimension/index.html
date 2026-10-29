@@ -48,7 +48,7 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-			@media print {
+						@media print {
 				@page { 
 					margin: 0.5cm !important; 
 					size: auto;
@@ -57,7 +57,6 @@
 				body { 
 					background: #fff !important; 
 					color: #000 !important; 
-					/* REMOVED overflow: hidden - it was causing the page spill */
 				}
 
 				#header, #footer, #bg, #main > article:not(#calc) { display: none !important; }
@@ -69,19 +68,28 @@
 					margin: 0 !important;
 					padding: 0 !important;
 				}
-				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* Make text black and hide buttons */
-				#calc h2, #calc p, #calc label, #calc span, #calc strong, #calc div { color: #000 !important; background: transparent !important; border-color: #ccc !important; }
+				#wrapper { 
+					height: auto !important; 
+					min-height: auto !important; 
+				}
+				
+				/* Ensure text is black and hide the toggle buttons */
+				#calc h2, #calc p, #calc label, #calc span, #calc strong, #calc div { color: #000 !important; }
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				
-				/* SHRINK FONTS TO FIT ONE PAGE */
-				#calc { font-size: 12px !important; }
-				#calc .fields .field { margin-bottom: 5px !important; }
-				#calc h2 { font-size: 18px !important; margin-bottom: 10px !important; }
-				#calc h4 { font-size: 14px !important; margin-top: 10px !important; margin-bottom: 5px !important; }
+				/* Remove the dark box background so it prints cleanly without using black ink */
+				#calc div { 
+					background: transparent !important; 
+					border-color: #ccc !important; 
+				}
 
-				/* WATERMARK ON BODY (Always shows) */
+				/* TIGHTEN SPACING (This prevents the spill to Page 2 without shrinking the font) */
+				#calc .fields .field { margin-bottom: 5px !important; }
+				#calc h4 { margin-top: 5px !important; margin-bottom: 5px !important; }
+				#calc p { margin-bottom: 10px !important; }
+
+				/* THE REPEATING WATERMARK ON THE BODY */
 				body::before {
 					content: "";
 					position: fixed;
