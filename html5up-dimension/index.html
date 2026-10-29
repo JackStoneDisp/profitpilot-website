@@ -70,23 +70,32 @@
 					margin: 0 !important;
 					padding: 0 !important;
 					position: relative;
-					/* SHRINK OVERALL PDF TEXT SIZE */
 					font-size: 11px !important;
 				}
 				
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* Fix the black input boxes */
+				/* FIX 1: Make the input boxes shrink to fit the text */
 				#calc input, #calc select, #calc textarea {
 					background: transparent !important;
 					border: 1px solid #000 !important;
 					color: #000 !important;
-					padding: 4px !important; /* Tighten input box padding */
+					width: auto !important;
+					min-width: 250px; /* keeps it from getting too small */
+					max-width: 100%;
+					padding: 4px 8px !important;
+					display: inline-block;
 				}
 				
 				#calc * { color: #000 !important; }
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				#calc div { background: transparent !important; border-color: #ccc !important; }
+				
+				/* FIX 2: Bring the text and numbers closer together in the expense list */
+				#calc div[style*="justify-content: space-between"] {
+					justify-content: flex-start !important;
+					gap: 20px !important; /* Adjust this number to move them closer/further */
+				}
 				
 				/* TIGHTEN SPACING */
 				#calc .fields .field { margin-bottom: 3px !important; }
@@ -101,14 +110,13 @@
 					margin-top: 5px !important; 
 				}
 
-				/* REPEATING WATERMARK (INCREASED SIZE) */
+				/* REPEATING WATERMARK */
 				#calc::after {
 					content: "";
 					position: absolute;
 					top: 0; left: 0; width: 100%; height: 100%;
 					z-index: -1;
 					pointer-events: none;
-					/* I increased the SVG width/height and the font sizes inside this URL */
 					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><g transform='rotate(-35 200 150)'><text x='50%' y='40%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>ProfitPilot Logistics</text><text x='50%' y='55%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>profitpilotlogistics.com</text></g><g transform='rotate(-35 200 150)'><text x='50%' y='80%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>ProfitPilot Logistics</text><text x='50%' y='95%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>profitpilotlogistics.com</text></g></svg>");
 					background-repeat: repeat;
 				}
