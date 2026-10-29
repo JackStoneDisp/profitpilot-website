@@ -48,62 +48,66 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-						@media print {
+			@media print {
 				@page { 
-					margin: 0.5cm !important; 
+					margin: 0.5cm; 
 					size: auto;
 				}
 				
 				body { 
 					background: #fff !important; 
 					color: #000 !important; 
+					font-size: 11px !important; /* Shrinks the whole page slightly to ensure it fits */
 				}
 
+				/* Hide everything except the calculator */
 				#header, #footer, #bg, #main > article:not(#calc) { display: none !important; }
 				
+				/* Show only the calculator */
 				#main > article#calc { 
 					display: block !important; 
 					background: #fff !important; 
 					color: #000 !important; 
 					margin: 0 !important;
 					padding: 0 !important;
+					position: relative;
 				}
+				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				#wrapper { 
-					height: auto !important; 
-					min-height: auto !important; 
-				}
+				/* Force all text to be black */
+				#calc * { color: #000 !important; }
 				
-				/* Ensure text is black and hide the toggle buttons */
-				#calc h2, #calc p, #calc label, #calc span, #calc strong, #calc div { color: #000 !important; }
+				/* Hide the buttons and toggle [-] buttons */
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				
-				/* Remove the dark box background so it prints cleanly without using black ink */
-				#calc div { 
-					background: transparent !important; 
-					border-color: #ccc !important; 
-				}
-
-				/* TIGHTEN SPACING (This prevents the spill to Page 2 without shrinking the font) */
+				/* Remove dark backgrounds */
+				#calc div { background: transparent !important; border-color: #ccc !important; }
+				
+				/* TIGHTEN SPACING */
 				#calc .fields .field { margin-bottom: 5px !important; }
-				#calc h4 { margin-top: 5px !important; margin-bottom: 5px !important; }
+				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
+				#calc h2 { font-size: 20px !important; margin-bottom: 10px !important; }
 				#calc p { margin-bottom: 10px !important; }
 
-				/* THE REPEATING WATERMARK ON THE BODY */
-				body::before {
-					content: "";
-					position: fixed;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
+				/* WATERMARK */
+				#calc::before {
+					content: "ProfitPilot Logistics | profitpilotlogistics.com";
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%) rotate(-35deg);
+					font-size: 2.5em;
+					font-family: 'Courier New', Courier, monospace;
+					font-weight: bold;
+					color: rgba(0, 0, 0, 0.05);
 					z-index: -1;
 					pointer-events: none;
-					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='350' height='200'><text x='50%' y='50%' transform='rotate(-30 175 100)' text-anchor='middle' dominant-baseline='middle' font-family='Courier New' font-size='14' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='1'>ProfitPilot Logistics | profitpilotlogistics.com</text></svg>");
-					background-repeat: repeat;
+					white-space: nowrap;
+					border: 3px solid rgba(0, 0, 0, 0.05);
+					padding: 20px 40px;
+					border-radius: 10px;
 				}
-			}
-				#calc .fields .field { margin-bottom: 10px !important; }
+			}				#calc .fields .field { margin-bottom: 10px !important; }
 				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
 		</style>
 	</head>
