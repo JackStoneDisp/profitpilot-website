@@ -48,6 +48,15 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
+								@media print {
+				body { background: #fff !important; color: #000 !important; }
+				#header, #footer, #bg, #main > article:not(#calc) { display: none !important; }
+				#main > article#calc { display: block !important; background: #fff !important; color: #000 !important; }
+				#wrapper { height: auto !important; min-height: auto !important; }
+				#calc h2, #calc p, #calc label, #calc span, #calc strong { color: #000 !important; }
+				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
+				#calc div { background: transparent !important; border-color: #ccc !important; }
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -148,6 +157,19 @@
 
 						<!-- Calc & Tools -->
 							<article id="calc">
+																		<div style="display: flex; justify-content: space-between; font-size: 1.1em;">
+											<span>Net Profit Per Mile:</span> 
+											<strong id="master-net-pm" style="color:#2196F3;">$0.00 / mi</strong>
+										</div>
+
+										<!-- NEW BUTTONS START HERE -->
+										<div style="margin-top: 25px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+											<a href="#contact" onclick="prefillContact()" class="button primary" style="background-color: #ff5722 !important; box-shadow: none; border: none; font-weight: bold; padding: 12px 20px;">👉 Send This Load to Dispatch</a>
+											<button onclick="window.print()" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.2s;">🖨️ Print / Save Results</button>
+										</div>
+										<!-- NEW BUTTONS END HERE -->
+
+										<!-- TRANSPARENCY NOTE -->
 								<h2 class="major">Real-World Trip Profitability<br>Calculator</h2>
 								<p>Select your origin and destination to automatically calculate route mileage, or enter custom miles & gross pay. Click <strong>[-]</strong> to toggle any expense.</p>
 
@@ -781,6 +803,22 @@
 						document.getElementById('master-net-pm').innerText = '$0.00 / mi';
 						document.getElementById('master-net-profit').style.color = '#4CAF50';
 					}
+				}
+								function prefillContact() {
+					const from = document.getElementById('route-from').value;
+					const to = document.getElementById('route-to').value;
+					const miles = document.getElementById('master-miles').value;
+					const gross = document.getElementById('master-gross').value;
+					
+					const messageBox = document.getElementById('message');
+					
+					let text = "Hi ProfitPilot, I'd like to get this load dispatched:\n\n";
+					if (from && to) text += `Route: ${from} to ${to}\n`;
+					if (miles) text += `Total Miles: ${miles}\n`;
+					if (gross) text += `Gross Pay: $${gross}\n`;
+					text += "\nPlease contact me to discuss.";
+					
+					messageBox.value = text;
 				}
 				function updateModalHub() {
 					const val = document.getElementById('modal-hub-select').value;
