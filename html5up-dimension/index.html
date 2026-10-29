@@ -87,8 +87,8 @@
 					margin-bottom: 0 !important;
 					font-size: 14px !important;
 					font-weight: bold;
-					height: auto !important; /* FORCES DROPDOWNS TO SHRINK */
-					min-height: 0 !important; /* REMOVES THE INVISIBLE BOX HEIGHT */
+					height: auto !important; 
+					min-height: 0 !important; 
 					line-height: 1.2 !important;
 				}
 				
@@ -97,7 +97,16 @@
 				#calc div { background: transparent !important; border-color: transparent !important; }
 				
 				/* Headings */
-				#calc h2 { font-size: 18px !important; font-weight: bold !important; margin-bottom: 8px !important; text-transform: uppercase; letter-spacing: 1px; }
+				#calc h2 { 
+					font-size: 17px !important; 
+					font-weight: bold !important; 
+					margin-bottom: 8px !important; 
+					text-transform: uppercase; 
+					letter-spacing: 1px; 
+					white-space: nowrap !important; /* FORCES IT TO ONE LINE */
+				}
+				#calc h2 br { display: none !important; } /* HIDES THE LINE BREAK */
+				
 				#calc h4 { font-size: 15px !important; font-weight: bold !important; margin-top: 10px !important; margin-bottom: 5px !important; border-bottom: 2px solid #000; padding-bottom: 2px; text-transform: uppercase; }
 				#calc p { font-size: 12px !important; margin-bottom: 8px !important; }
 				
