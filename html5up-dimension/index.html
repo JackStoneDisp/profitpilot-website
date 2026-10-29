@@ -50,7 +50,7 @@
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
 			@media print {
 				@page { 
-					margin: 0.2cm !important; 
+					margin: 0.3cm !important; 
 					size: auto;
 				}
 				
@@ -73,53 +73,46 @@
 					font-size: 11px !important;
 				}
 				
-				/* REDUCE HEADER AND FOOTER SPACE */
-				#calc h2 { font-size: 16px !important; margin-bottom: 5px !important; }
-				#calc p { font-size: 10px !important; margin-bottom: 5px !important; }
-				#calc h4 { font-size: 12px !important; margin-top: 5px !important; margin-bottom: 3px !important; }
-
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* FIX INPUT BOXES TO SHRINK */
+				/* Fix the input boxes */
 				#calc input, #calc select, #calc textarea {
 					background: transparent !important;
 					border: 1px solid #000 !important;
 					color: #000 !important;
 					width: auto !important;
-					min-width: 250px;
-					max-width: 100%;
-					padding: 2px 6px !important;
-					display: inline-block;
+					min-width: 200px;
+					padding: 2px 5px !important;
 					margin-bottom: 2px !important;
+					font-size: 11px !important;
 				}
 				
 				#calc * { color: #000 !important; }
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				#calc div { background: transparent !important; border-color: #ccc !important; }
 				
-				/* FIX EXPENSE LIST ALIGNMENT (FIXES THE MESSED UP NUMBERS) */
-				#calc div[style*="justify-content: space-between"] {
-					display: flex !important;
-					justify-content: space-between !important;
-					align-items: center !important;
-					margin-bottom: 2px !important;
-				}
-				#calc div[style*="justify-content: space-between"] strong {
-					text-align: right !important;
-					min-width: 60px !important; /* Gives the numbers a column to sit in */
+				/* UNIFORM HEADINGS (BOLD & CONSISTENT SIZE) */
+				#calc h2 { font-size: 16px !important; font-weight: bold !important; margin-bottom: 8px !important; text-transform: uppercase; }
+				#calc h4 { font-size: 12px !important; font-weight: bold !important; margin-top: 10px !important; margin-bottom: 5px !important; border-bottom: 1px solid #000; padding-bottom: 2px; }
+				#calc p { font-size: 11px !important; margin-bottom: 8px !important; }
+				
+				/* FIX THE EXPENSE COLUMNS SAFELY */
+				#calc .row-item { 
+					display: flex !important; 
+					justify-content: space-between !important; 
+					margin-bottom: 3px !important; 
 				}
 				
-				/* TIGHTEN SPACING */
-				#calc .fields .field { margin-bottom: 2px !important; }
-				
-				/* Make the NOTE text much smaller */
+				/* NOTE SECTION */
 				#calc div[style*="font-size: 0.75em"] { 
 					font-size: 8px !important; 
-					line-height: 1.1 !important; 
-					margin-top: 5px !important; 
+					line-height: 1.2 !important; 
+					margin-top: 10px !important; 
+					border-top: 1px solid #000;
+					padding-top: 5px;
 				}
 
-				/* REPEATING WATERMARK */
+				/* WATERMARK */
 				#calc::after {
 					content: "";
 					position: absolute;
