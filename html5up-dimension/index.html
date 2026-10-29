@@ -48,22 +48,19 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-			@media print {
+						@media print {
 				@page { 
-					margin: 0.5cm; 
+					margin: 0.5cm !important; 
 					size: auto;
 				}
 				
 				body { 
 					background: #fff !important; 
 					color: #000 !important; 
-					font-size: 11px !important; /* Shrinks the whole page slightly to ensure it fits */
 				}
 
-				/* Hide everything except the calculator */
 				#header, #footer, #bg, #main > article:not(#calc) { display: none !important; }
 				
-				/* Show only the calculator */
 				#main > article#calc { 
 					display: block !important; 
 					background: #fff !important; 
@@ -72,18 +69,13 @@
 					padding: 0 !important;
 					position: relative;
 				}
+				
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* Force all text to be black */
 				#calc * { color: #000 !important; }
-				
-				/* Hide the buttons and toggle [-] buttons */
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
-				
-				/* Remove dark backgrounds */
 				#calc div { background: transparent !important; border-color: #ccc !important; }
 				
-				/* TIGHTEN SPACING */
 				#calc .fields .field { margin-bottom: 5px !important; }
 				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
 				#calc h2 { font-size: 20px !important; margin-bottom: 10px !important; }
@@ -107,8 +99,7 @@
 					padding: 20px 40px;
 					border-radius: 10px;
 				}
-			}				#calc .fields .field { margin-bottom: 10px !important; }
-				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
+			}
 		</style>
 	</head>
 	<body class="is-preload">
