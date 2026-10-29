@@ -70,12 +70,12 @@
 					margin: 0 !important;
 					padding: 0 !important;
 					position: relative;
-					font-size: 14px !important; /* INCREASED FONT SIZE */
+					font-size: 14px !important;
 				}
 				
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
-				/* Clean inputs (remove boxes, just show text) */
+				/* Clean inputs */
 				#calc input, #calc select, #calc textarea {
 					background: transparent !important;
 					border: none !important;
@@ -84,7 +84,6 @@
 					width: auto !important;
 					min-width: 250px;
 					padding: 2px 5px !important;
-					margin-bottom: 2px !important;
 					font-size: 14px !important;
 					font-weight: bold;
 				}
@@ -93,19 +92,23 @@
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
 				#calc div { background: transparent !important; border-color: transparent !important; }
 				
-				/* LARGER, BOLDER HEADINGS */
+				/* Headings */
 				#calc h2 { font-size: 22px !important; font-weight: bold !important; margin-bottom: 10px !important; text-transform: uppercase; }
 				#calc h4 { font-size: 16px !important; font-weight: bold !important; margin-top: 15px !important; margin-bottom: 8px !important; border-bottom: 2px solid #000; padding-bottom: 4px; text-transform: uppercase; }
 				#calc p { font-size: 14px !important; margin-bottom: 10px !important; }
 				
-				/* REDUCE SPACING BETWEEN ROWS */
+				/* Tighten the input field spacing */
+				#calc .fields .field { margin-bottom: 5px !important; margin-top: 0 !important; }
+				#calc .fields label { margin-bottom: 2px !important; padding-top: 0 !important; }
+
+				/* Expense rows */
 				#calc .row-item { 
 					display: flex !important; 
 					justify-content: space-between !important; 
 					margin-bottom: 4px !important; 
 				}
 				
-				/* NOTES SECTION */
+				/* Notes */
 				#calc div[style*="font-size: 0.75em"] { 
 					font-size: 10px !important; 
 					line-height: 1.3 !important; 
@@ -114,7 +117,7 @@
 					padding-top: 5px;
 				}
 
-				/* WATERMARK */
+				/* Watermark */
 				#calc::after {
 					content: "";
 					position: absolute;
@@ -124,8 +127,7 @@
 					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><g transform='rotate(-35 200 150)'><text x='50%' y='40%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>ProfitPilot Logistics</text><text x='50%' y='55%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>profitpilotlogistics.com</text></g><g transform='rotate(-35 200 150)'><text x='50%' y='80%' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)'>ProfitPilot Logistics</text><text x='50%' y='95%' text-anchor='middle' font-family='Arial, sans-serif' font-size='22' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>profitpilotlogistics.com</text></g></svg>");
 					background-repeat: repeat;
 				}
-			}
-					
+			}					
 		</style>
 	</head>
 	<body class="is-preload">
