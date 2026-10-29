@@ -48,7 +48,7 @@
 								/* Fix form label spacing in Calculator */
 			#calc .fields .field { margin-bottom: 15px !important; }
 			#calc .fields label { margin-bottom: 5px !important; display: block; font-size: 0.9em; }
-			@media print {
+						@media print {
 				@page { 
 					margin: 0.5cm !important; 
 					size: auto;
@@ -72,32 +72,27 @@
 				
 				#wrapper { height: auto !important; min-height: auto !important; }
 				
+				/* Force all text to be black */
 				#calc * { color: #000 !important; }
+				
+				/* Hide the buttons and toggle [-] buttons */
 				#calc .toggle-btn, #calc a.button, #calc button { display: none !important; }
+				
+				/* Remove dark backgrounds */
 				#calc div { background: transparent !important; border-color: #ccc !important; }
 				
+				/* TIGHTEN SPACING */
 				#calc .fields .field { margin-bottom: 5px !important; }
 				#calc h4 { margin-top: 10px !important; margin-bottom: 5px !important; }
 				#calc h2 { font-size: 20px !important; margin-bottom: 10px !important; }
 				#calc p { margin-bottom: 10px !important; }
 
-				/* WATERMARK */
-				#calc::before {
-					content: "ProfitPilot Logistics | profitpilotlogistics.com";
-					position: absolute;
-					top: 50%;
-					left: 50%;
-					transform: translate(-50%, -50%) rotate(-35deg);
-					font-size: 2.5em;
-					font-family: 'Courier New', Courier, monospace;
-					font-weight: bold;
-					color: rgba(0, 0, 0, 0.05);
-					z-index: -1;
-					pointer-events: none;
-					white-space: nowrap;
-					border: 3px solid rgba(0, 0, 0, 0.05);
-					padding: 20px 40px;
-					border-radius: 10px;
+				/* REPEATING WATERMARK (SECURITY PAPER STYLE) */
+				#calc {
+					background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'><text x='50%' y='50%' transform='rotate(-35 150 100)' text-anchor='middle' dominant-baseline='middle' font-family='Arial, sans-serif' font-size='14' font-weight='bold' fill='rgba(0,0,0,0.06)' letter-spacing='2'>ProfitPilot Logistics</text><text x='50%' y='65%' transform='rotate(-35 150 100)' text-anchor='middle' dominant-baseline='middle' font-family='Arial, sans-serif' font-size='10' fill='rgba(0,0,0,0.06)' letter-spacing='1'>profitpilotlogistics.com</text></svg>") !important;
+					background-repeat: repeat !important;
+					-webkit-print-color-adjust: exact !important; 
+					print-color-adjust: exact !important;
 				}
 			}
 		</style>
