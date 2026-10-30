@@ -53,7 +53,10 @@
 					margin: 0.3cm !important; 
 					size: auto;
 				}
-				
+				html, body { 
+					overflow: hidden !important; 
+					height: auto !important;
+				}
 				body { 
 					background: #fff !important; 
 					color: #000 !important; 
@@ -510,7 +513,7 @@
 										<!-- NEW BUTTONS START HERE -->
 										<div style="margin-top: 25px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
 											<a href="#contact" onclick="prefillContact()" class="button primary" style="background-color: #ff5722 !important; box-shadow: none; border: none; font-weight: bold; padding: 12px 20px; display: inline-flex; justify-content: center; align-items: center;">👉Send This Load to Dispatch</a>
-											<button onclick="window.print()" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.2s; display: inline-flex; justify-content: center; align-items: center;">🖨️Print / Save Results</button>
+											<button onclick="handlePrint()" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.2s; display: inline-flex; justify-content: center; align-items: center;">🖨️Print / Save Results</button>
 										</div>
 										<!-- NEW BUTTONS END HERE -->
 
@@ -911,6 +914,21 @@
 					text += "\nPlease contact me to discuss.";
 					
 					messageBox.value = text;
+				}
+								function handlePrint() {
+					// 1. Check if the user is on an Apple device (iPhone/iPad)
+					const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+					
+					// 2. Check if they are using Google Chrome on that Apple device
+					const isChrome = /CriOS/.test(navigator.userAgent);
+
+					if (isIOS && isChrome) {
+						// Chrome on iPhone has a bug where window.print() fails.
+						alert("To save this PDF on iPhone, Google Chrome is not supported.\n\nPlease tap the 'Share' icon at the top right and select 'Open in Safari'. Then click the Print button again.");
+					} else {
+						// Safari and Android work perfectly with the standard command
+						window.print();
+					}
 				}
 				function updateModalHub() {
 					const val = document.getElementById('modal-hub-select').value;
