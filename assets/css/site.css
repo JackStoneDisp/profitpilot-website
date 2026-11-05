@@ -1,0 +1,31 @@
+:root{--bg:#0f1115;--card:#181b22;--tx:#e8eaed;--mut:#a0a6b0;--ac:#ff5722;--ln:#2a2e37;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+a{color:var(--ac)}
+.w{max-width:1000px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:9;background:rgba(15,17,21,.96);border-bottom:1px solid var(--ln);padding-top:env(safe-area-inset-top,0)}
+header .w{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--tx);text-decoration:none;font-weight:700}
+nav a{color:var(--tx);text-decoration:none;margin-left:16px;font-size:.95em}
+nav a:hover{color:var(--ac)}
+.hero{padding:64px 0 40px;text-align:center;background:radial-gradient(circle at 50% 0,#2b1a12,transparent 65%)}
+h1{font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.15;margin:0 0 12px}
+h2{margin:0 0 16px}
+.sub{color:var(--mut);max-width:640px;margin:0 auto 24px}
+.btn{display:inline-block;background:var(--ac);color:#fff;padding:12px 22px;border-radius:6px;font-weight:700;text-decoration:none;border:0;cursor:pointer;font-size:1em}
+.btn.o{background:transparent;border:1px solid #444;color:var(--tx);margin-left:8px}
+section{padding:36px 0}
+.g{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.c{background:var(--card);border:1px solid var(--ln);border-radius:8px;padding:20px}
+.c h3{margin:0 0 6px}
+.c a{text-decoration:none}
+.big{font-size:1.4em;font-weight:800;color:var(--ac)}
+details{background:var(--card);border:1px solid var(--ln);border-radius:8px;padding:12px 16px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600}
+form{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+form .f{grid-column:1/-1}
+label{display:block;font-size:.9em;color:var(--mut);margin-bottom:4px}
+input,select,textarea{width:100%;padding:10px;background:#0b0d11;color:var(--tx);border:1px solid #3a3f4a;border-radius:6px;font:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+footer{border-top:1px solid var(--ln);padding:24px 0;color:var(--mut);font-size:.9em;text-align:center}
+@media(max-width:600px){form{grid-template-columns:1fr}nav a{margin:0 10px 0 0}}
