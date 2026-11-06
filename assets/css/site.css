@@ -29,3 +29,17 @@ input,select,textarea{width:100%;padding:10px;background:#0b0d11;color:var(--tx)
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 footer{border-top:1px solid var(--ln);padding:24px 0;color:var(--mut);font-size:.9em;text-align:center}
 @media(max-width:600px){form{grid-template-columns:1fr}nav a{margin:0 10px 0 0}}
+.hero.truck{background:linear-gradient(rgba(15,17,21,.72),rgba(15,17,21,.94)),url(../../images/hero.jpg) center/cover,#0f1115}
+.est,.tick{background:rgba(0,0,0,.7);border:1px solid #3a3f4a;border-radius:8px;padding:16px;max-width:700px;margin:24px auto 0}
+.est .r{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+.est input{width:140px}
+.pos{color:#4caf50}.neg{color:#ff5722}
+.tick{max-width:520px;padding:8px 12px;text-align:center;margin-top:12px}.tick small{color:var(--mut)}
+.tvw{display:flex;gap:6px;flex-wrap:wrap;min-height:70px}.tvw>div{flex:1;min-width:150px;height:70px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.tg{background:rgba(255,255,255,.1);border:1px solid #555;color:var(--ac);padding:2px 8px;border-radius:4px;cursor:pointer}
+.tg.x{background:var(--ac);color:#fff;text-decoration:line-through}
+.notes{font-size:.8em;color:var(--mut);border-top:1px dashed #444;margin-top:16px;padding-top:10px}
+table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid var(--ln);text-align:left}
+.scroll{overflow-x:auto}
+@media print{header,footer,.noprint{display:none!important}body{background:#fff;color:#000}*{color:#000!important;background:transparent!important}.c{border:0}input,select{border:0;border-bottom:1px solid #000}body::before{content:"ProfitPilot Logistics - profitpilotlogistics.com";position:fixed;top:40%;left:5%;font-size:44px;transform:rotate(-30deg);opacity:.07;white-space:nowrap}}
