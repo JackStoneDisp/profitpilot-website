@@ -22,6 +22,6 @@ mi.value="...";const a=C[f],b=C[t];let m=0;
 if(WORKER)try{const r=await fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({coordinates:[[a[1],a[0]],[b[1],b[0]]]})});const d=await r.json();m=Math.round(d.routes[0].summary.distance*0.000621371)}catch(e){}
 if(!m){m=Math.round(hav(a,b)*1.2);nt.textContent="Miles are estimated from straight-line distance. Edit them if you know the exact route."}
 mi.value=m;calc()}
-$("print").onclick=()=>{const u=navigator.userAgent;if(/iPad|iPhone|iPod/.test(u)&&/CriOS/.test(u))alert("To save a PDF on iPhone, open this page in Safari, then tap Print again.");else window.print()};
+$("print").onclick=()=>{const u=navigator.userAgent,ios=/iPad|iPhone|iPod/.test(u)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);if(ios&&/CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo|FBAN|FBAV|Instagram|Line\/|GSA/.test(u)){alert("To print or save a PDF on iPhone/iPad, open this page in Safari, then tap Print again.");return}try{window.print()}catch(e){alert("Printing is not available in this browser. Please open this page in Safari or Chrome.")}};
 $("miles").oninput=$("gross").oninput=calc;calc();
 })();
