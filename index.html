@@ -64,10 +64,12 @@
 <div><label for="email">Email</label><input id="email" name="email" type="email" required></div>
 <div><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel"></div>
 <div><label for="mc">MC or DOT number</label><input id="mc" name="mc_dot"></div>
-<div><label for="eq">Equipment type</label><select id="eq" name="equipment"><option>Dry Van</option><option>Reefer</option><option>Flatbed / Step Deck</option><option>Power Only</option><option>Box Truck</option></select></div>
+<div><label for="eq">Equipment type</label><select id="eq" name="equipment" required><option value="" disabled selected>Select equipment type</option><option>Dry Van</option><option>Reefer</option><option>Flatbed</option><option>Step Deck</option><option>Power Only</option><option>Box Truck</option><optgroup label="More equipment types"><option>Hotshot</option><option>Conestoga</option><option>Lowboy / RGN</option><option>Sprinter / Cargo Van</option><option>Container / Intermodal</option><option>Tanker</option><option>Car Hauler</option></optgroup><option>Other</option></select></div>
 <div><label for="trucks">Number of trucks</label><input id="trucks" name="trucks" type="number" min="1" value="1"></div>
+<div class="f" id="eqo-wrap" hidden><label for="eqo">Please write your vehicle type</label><input id="eqo" name="equipment_other" placeholder="e.g. Dump truck, Flatbed with sides, Pilot car"></div>
 <div class="f"><label for="msg">Preferred lanes or questions</label><textarea id="msg" name="message" rows="4"></textarea></div>
-<div class="f"><button class="btn" type="submit">Send message</button></div></form></div></section>
+<div class="f"><button class="btn" type="submit">Send message</button></div></form>
+<script>(function(){var e=document.getElementById("eq"),w=document.getElementById("eqo-wrap"),i=document.getElementById("eqo");e.addEventListener("change",function(){var o=e.value==="Other";w.hidden=!o;i.required=o;if(o)i.focus();else i.value=""})})()</script></div></section>
 </main>
 <footer><div class="w"><p>&copy; 2026 ProfitPilot Logistics &middot; <a href="mailto:dispatch@profitpilotlogistics.com">dispatch@profitpilotlogistics.com</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
 <p><a href="https://facebook.com/profitpilotlogistics" target="_blank" rel="noopener noreferrer">Facebook</a> &middot; <a href="https://instagram.com/profitpilotlogistics" target="_blank" rel="noopener noreferrer">Instagram</a> &middot; <a href="https://youtube.com/@profitpilotlogistics" target="_blank" rel="noopener noreferrer">YouTube</a> &middot; <a href="https://tiktok.com/@profitpilotlogistics" target="_blank" rel="noopener noreferrer">TikTok</a> &middot; <a href="https://x.com/profitpilotlog" target="_blank" rel="noopener noreferrer">X</a></p></div></footer><script src="assets/js/site.js" defer></script></body></html>
