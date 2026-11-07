@@ -45,3 +45,5 @@ footer{border-top:1px solid var(--ln);padding:24px 0;color:var(--mut);font-size:
 table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid var(--ln);text-align:left}
 .scroll{overflow-x:auto}
 @media print{header,footer,.noprint{display:none!important}body{background:#fff;color:#000}*{color:#000!important;background:transparent!important}.c{border:0}input,select{border:0;border-bottom:1px solid #000}body::before{content:"ProfitPilot Logistics - profitpilotlogistics.com";position:fixed;top:40%;left:5%;font-size:44px;transform:rotate(-30deg);opacity:.07;white-space:nowrap}}
+.tick,.tvw,.tvw iframe{color-scheme:normal}
+.tvw>div{background:#0b0d11;border-radius:6px;overflow:hidden}
