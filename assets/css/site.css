@@ -44,25 +44,50 @@ footer{border-top:1px solid var(--ln);padding:24px 0;color:var(--mut);font-size:
 .notes{font-size:.8em;color:var(--mut);border-top:1px dashed #444;margin-top:16px;padding-top:10px}
 table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid var(--ln);text-align:left}
 .scroll{overflow-x:auto}
-@media print{header,footer,.noprint{display:none!important}body{background:#fff;color:#000}*{color:#000!important;background:transparent!important}.c{border:0}input,select{border:0;border-bottom:1px solid #000}body::before{content:"ProfitPilot Logistics - profitpilotlogistics.com";position:fixed;top:40%;left:5%;font-size:44px;transform:rotate(-30deg);opacity:.07;white-space:nowrap}}
 .tick,.tvw,.tvw iframe{color-scheme:normal}
 .tvw>div{background:#0b0d11;border-radius:6px;overflow:hidden}
+.pr{display:none}
 @page{size:auto;margin:0}
 @media print{
-html,body{height:auto;margin:0}
-body{padding:10mm 12mm;font-size:12px;line-height:1.35}
-.hero{padding:0 0 4px!important}
-.hero .sub{display:none}
-h1,.hero h1{font-size:18px;margin:0 0 6px;text-shadow:none!important}
-h2{font-size:13px;margin:6px 0 4px}
-section{padding:4px 0}
-.c{padding:4px 0;break-inside:avoid}
-.g{grid-template-columns:1fr 1fr;gap:6px 12px}
-label{font-size:10px;margin-bottom:1px}
-input,select{padding:2px 0;font-size:12px;appearance:none;-webkit-appearance:none}
-.row{margin-bottom:2px}
-hr{margin:4px 0}
-.tg{display:none}
-.notes{font-size:9px;line-height:1.3;margin-top:8px;padding-top:4px;break-inside:avoid}
-.w>.c:has(#rows)~*{display:none}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{height:auto;margin:0;background:#fff!important}
+body{padding:12mm 14mm 22mm;color:#111;font-size:13.5px;line-height:1.45}
+body::before{content:"ProfitPilot Logistics  |  profitpilotlogistics.com";position:fixed;top:44%;left:-2%;font-size:50px;font-weight:700;transform:rotate(-30deg);color:#000;opacity:.05;white-space:nowrap;z-index:-1}
+header,footer,.noprint,.hero,.tg,hr{display:none!important}
+section{padding:0}
+.w{max-width:none;padding:0}
+.pr-head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #ff5722;padding-bottom:10px}
+.pr-brand{display:flex;align-items:center;gap:10px}
+.pr-brand img{width:46px;height:46px}
+.pr-brand b{font-size:20px;display:block;color:#0f1115}
+.pr-brand span{color:#666;font-size:12px}
+.pr-links{text-align:right;font-size:11.5px;color:#555;line-height:1.5}
+.pr-links b{color:#ff5722;font-size:13px}
+.pr-title{display:block;background:#0f1115;border-radius:8px;padding:12px 16px;margin:14px 0}
+.pr-title h2{margin:0;font-size:22px;letter-spacing:1.5px;text-transform:uppercase;color:#fff}
+.pr-title h2 em{color:#ff7043;font-style:normal}
+.pr-title p{margin:3px 0 0;font-size:12px;color:#c9ccd2}
+.c{background:none;border:0;padding:0}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+.g>div{background:#f4f5f7;border:1px solid #e1e3e8;border-radius:6px;padding:7px 10px}
+label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#777;margin:0 0 2px}
+input,select{background:none!important;border:0;color:#111;font-size:15px;font-weight:700;padding:0;appearance:none;-webkit-appearance:none}
+.c h2{font-size:15px!important;margin:14px 0 6px!important;color:#0f1115;border-bottom:2px solid #ff5722;padding-bottom:3px;display:inline-block}
+.row{display:flex;justify-content:space-between;padding:6px 10px;font-size:13.5px!important;border-bottom:1px solid #eceef2;margin:0}
+#rows .row:nth-child(odd){background:#f8f9fb}
+.row strong{color:#d84315}
+.row.tr{margin-top:6px;font-weight:700;background:#f4f5f7}
+.row.nr{background:#0f1115;color:#fff;font-size:20px!important;padding:12px 14px;border:0;border-radius:8px;margin-top:8px}
+.row.nr strong{font-size:24px}
+.row.nr #net.pos{color:#69f0ae}
+.row.nr #net.neg{color:#ff8a65}
+.row.pr-pm{font-size:15px!important;font-weight:700;padding:8px 14px}
+.row.pr-pm strong{color:#1565c0!important}
+.notes{display:block;font-size:10.5px;line-height:1.5;color:#444;background:#fff7f3;border:0;border-left:4px solid #ff5722;border-radius:4px;padding:8px 12px;margin-top:14px}
+#mnote{margin:6px 0 0;background:none;border:0;padding:0;font-style:italic}
+#mnote:empty{display:none}
+.pr-foot{display:flex;justify-content:space-between;gap:12px;position:fixed;left:14mm;right:14mm;bottom:9mm;border-top:2px solid #ff5722;padding-top:6px;font-size:10.5px;color:#555}
+input{outline:0!important}
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{display:none}
+input{-moz-appearance:textfield}
 }
