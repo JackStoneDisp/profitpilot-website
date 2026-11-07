@@ -60,14 +60,14 @@
 <section id="contact"><div class="w"><h2>Get dispatched</h2><p>Tell us about your truck and we will reply by email.</p>
 <form method="post" action="https://formspree.io/f/xppqkqrb">
 <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-<div><label for="name">Name or fleet name</label><input id="name" name="name" required></div>
-<div><label for="email">Email</label><input id="email" name="email" type="email" required></div>
-<div><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel"></div>
-<div><label for="mc">MC or DOT number</label><input id="mc" name="mc_dot"></div>
+<div><label for="name">Name or fleet name</label><input id="name" name="name" maxlength="80" required></div>
+<div><label for="email">Email</label><input id="email" name="email" type="email" maxlength="100" required></div>
+<div><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" maxlength="20"></div>
+<div><label for="mc">MC or DOT number</label><input id="mc" name="mc_dot" maxlength="20"></div>
 <div><label for="eq">Equipment type</label><select id="eq" name="equipment" required><option value="" disabled selected>Select equipment type</option><option>Dry Van</option><option>Reefer</option><option>Flatbed</option><option>Step Deck</option><option>Power Only</option><option>Box Truck</option><optgroup label="More equipment types"><option>Hotshot</option><option>Conestoga</option><option>Lowboy / RGN</option><option>Sprinter / Cargo Van</option><option>Container / Intermodal</option><option>Tanker</option><option>Car Hauler</option></optgroup><option>Other</option></select></div>
-<div><label for="trucks">Number of trucks</label><input id="trucks" name="trucks" type="number" min="1" value="1"></div>
-<div class="f" id="eqo-wrap" hidden><label for="eqo">Please write your vehicle type</label><input id="eqo" name="equipment_other" placeholder="e.g. Dump truck, Flatbed with sides, Pilot car"></div>
-<div class="f"><label for="msg">Preferred lanes or questions</label><textarea id="msg" name="message" rows="4"></textarea></div>
+<div><label for="trucks">Number of trucks</label><input id="trucks" name="trucks" type="number" min="1" max="999" value="1"></div>
+<div class="f" id="eqo-wrap" hidden><label for="eqo">Please write your vehicle type</label><input id="eqo" name="equipment_other" maxlength="40" placeholder="e.g. Dump truck or Pilot car (max 40 characters)"></div>
+<div class="f"><label for="msg">Preferred lanes or questions</label><textarea id="msg" name="message" rows="4" maxlength="1500"></textarea></div>
 <div class="f"><button class="btn" type="submit">Send message</button></div></form>
 <script>(function(){var e=document.getElementById("eq"),w=document.getElementById("eqo-wrap"),i=document.getElementById("eqo");e.addEventListener("change",function(){var o=e.value==="Other";w.hidden=!o;i.required=o;if(o)i.focus();else i.value=""})})()</script></div></section>
 </main>
